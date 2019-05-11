@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Register extends AppCompatActivity {
 
     // Variables
+    private String TAG = "ActivityRegister"
     private Button buttonRegister;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -51,8 +52,8 @@ public class Register extends AppCompatActivity {
     public void clickButtonRegister(View view) {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
-        LogMe(email);
-        LogMe(password);
+        //Log.d(TAG, email);
+        //Log.d(TAG, password);
 
         // If input is empty
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
@@ -62,19 +63,21 @@ public class Register extends AppCompatActivity {
             progressDialog.setMessage("Registering User");
             progressDialog.show();
 
-            LogMe("Ca estamos");
-
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            LogMe( "Completed");
+                            //Log.d(TAG, "onComplete");
+
                             if (task.isSuccessful()) {
-                                LogMe( "Successo!");
+                                Log.d(TAG, "createUserWithEmail:success");
                                 progressDialog.cancel();
                                 Toast.makeText(Register.this, "Successfully registered User!", Toast.LENGTH_SHORT).show();
+
+                                // Falta adicionar user, ve este link: https://firebase.google.com/docs/auth/android/start?authuser=0
+
                             } else {
-                                LogMe( "Falhaco");
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 progressDialog.cancel();
                                 Toast.makeText(Register.this, "Failed registering User!", Toast.LENGTH_SHORT).show();
                             }
