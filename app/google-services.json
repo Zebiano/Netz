@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "98131971636",
+    "firebase_url": "https://netz-6df21.firebaseio.com",
+    "project_id": "netz-6df21",
+    "storage_bucket": "netz-6df21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98131971636:android:465707dfaef1cd06",
+        "android_client_info": {
+          "package_name": "com.sihbar.netz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98131971636-695rvnlgusor31odl2tckh6jdss00cob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTcu9h_3B0CU-4edRhIsXFw1vMeDwmJDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98131971636-695rvnlgusor31odl2tckh6jdss00cob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
