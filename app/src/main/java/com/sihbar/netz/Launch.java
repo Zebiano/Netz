@@ -13,9 +13,15 @@ public class Launch extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
     }
 
-    public void openRegisterActivity(View view)
+    // Start Register Activity
+    public void startRegisterActivity(View view)
     {
-        Intent intent = new Intent(this, Register.class);
-        startActivity(intent);
+        startActivity(new Intent(this, Register.class));
+    }
+
+    // Start Login Activity
+    public void startLoginActivity(View view)
+    {
+        startActivity(new Intent(this, Login.class));
     }
 }

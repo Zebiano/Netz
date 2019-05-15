@@ -16,13 +16,14 @@
             android:id="@+id/buttonLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="startLoginActivity"
             android:text="Login" />
 
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="openRegisterActivity"
+            android:onClick="startRegisterActivity"
             android:text="Register" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
