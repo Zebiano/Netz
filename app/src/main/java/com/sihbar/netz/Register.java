@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,16 +40,6 @@ public class Register extends AppCompatActivity {
         // EditTexts
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Check if uer is signed in
-        if (firebaseAuth.getCurrentUser() != null) {
-            // TODO
-        }
     }
 
     // OnClick of ButtonRegister

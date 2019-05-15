@@ -19,7 +19,7 @@
         android:id="@+id/buttonClickMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="openLaunchActivity"
+        android:onClick="startLaunchActivity"
         android:text="Click me to start" />
 
 </android.support.constraint.ConstraintLayout>

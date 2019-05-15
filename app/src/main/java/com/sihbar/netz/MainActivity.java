@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,9 +15,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void openLaunchActivity(View view)
+    // Start Launch Activity
+    public void startLaunchActivity(View view)
     {
-        Intent intent = new Intent(this, Launch.class);
-        startActivity(intent);
+        startActivity(new Intent(this, Launch.class));
     }
 }
