@@ -27,9 +27,10 @@ public class Launch extends AppCompatActivity {
         super.onStart();
 
         // TODO (crashes app and idk why) Check if user is signed in
-        /*if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, Home.class));
-        }*/
+        if (firebaseAuth.getCurrentUser() != null) {
+            //startActivity(new Intent(this, Home.class));
+            Log.d(TAG, "boas");
+        }
     }
 
     // Start Register Activity
@@ -44,6 +45,6 @@ public class Launch extends AppCompatActivity {
 
     // Start Home Activity
     public void startHomeActivity(View view) {
-        startActivity(new Intent(this, Home.class));
+        //startActivity(new Intent(this, Home.class));
     }
 }
