@@ -20,4 +20,10 @@ public class MainActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this, Launch.class));
     }
+
+    public void startHome(View view)
+    {
+        startActivity(new Intent(this, Home.class));
+    }
+
 }

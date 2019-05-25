@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -20,6 +21,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="startLaunchActivity"
-        android:text="Click me to start" />
+        android:text="Click me to start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:onClick="startHome"
+        android:text="Open Home"
+        app:layout_constraintStart_toEndOf="@+id/buttonClickMe"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
