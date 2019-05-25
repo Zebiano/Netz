@@ -1,6 +1,7 @@
 package com.sihbar.netz;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -68,10 +69,12 @@ public class Register extends AppCompatActivity {
                                 progressDialog.cancel();
                                 Toast.makeText(Register.this, "Successfully registered User!", Toast.LENGTH_SHORT).show();
 
+                                // Redirect to login
+                                startActivity(new Intent(Register.this, Login.class));
                             } else {
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                 progressDialog.cancel();
-                                Toast.makeText(Register.this, "Failed registering User!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "Failed registering User! Check if you have Wifi turned on.", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

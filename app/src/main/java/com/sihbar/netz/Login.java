@@ -67,6 +67,7 @@ public class Login extends AppCompatActivity {
                                 progressDialog.cancel();
                                 Toast.makeText(Login.this, "Successfully logged in!", Toast.LENGTH_SHORT).show();
 
+                                // Redirect to Home
                                 startActivity(new Intent(Login.this, Home.class));
                             } else {
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
