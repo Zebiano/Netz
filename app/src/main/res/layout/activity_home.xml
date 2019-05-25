@@ -48,9 +48,7 @@
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="393dp"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 
