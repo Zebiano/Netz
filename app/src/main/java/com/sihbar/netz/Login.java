@@ -1,6 +1,7 @@
 package com.sihbar.netz;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,6 +66,8 @@ public class Login extends AppCompatActivity {
                                 Log.d(TAG, "signInWithEmail:success");
                                 progressDialog.cancel();
                                 Toast.makeText(Login.this, "Successfully logged in!", Toast.LENGTH_SHORT).show();
+
+                                startActivity(new Intent(Login.this, Home.class));
                             } else {
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 progressDialog.cancel();
