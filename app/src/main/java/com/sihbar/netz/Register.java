@@ -99,7 +99,7 @@ public class Register extends AppCompatActivity {
                                 String userId = firebaseAuth.getUid();
 
                                 // Create new User with our own class
-                                User user = new User(userId, name, phone, password, email, country); // TODO: Save the user ID from the Auth into the FireStore Database collection
+                                User user = new User(userId, name, phone, password, email, country);
 
                                 // Save User to Firestore
                                 firestore.collection("users").add(user)
