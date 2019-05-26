@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "98131971636-e0mjaajej4f58qpm1a8d3vlvdons5hdh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sihbar.netz",
+            "certificate_hash": "98f9afae0093f5296e77d2ee10df1b10fb5d7824"
+          }
+        },
+        {
           "client_id": "98131971636-695rvnlgusor31odl2tckh6jdss00cob.apps.googleusercontent.com",
           "client_type": 3
         }
