@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Launch extends AppCompatActivity {
 
     // Variables
-    private String TAG = "ActivityMainActivity";
+    private static final String TAG = "Launch";
 
     // Firebase
     private FirebaseAuth firebaseAuth;

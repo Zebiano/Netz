@@ -84,6 +84,8 @@ public class Register extends AppCompatActivity {
             progressDialog.setMessage("Registering User...");
             progressDialog.show();
 
+            Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser());
+
             // Create a user on the Firebase Auth
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -94,8 +96,10 @@ public class Register extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "createUserWithEmail:success");
 
+                                String userId = firebaseAuth.getUid();
+
                                 // Create new User with our own class
-                                User user = new User(name, phone, password, email, country); // TODO: Save the user ID from the Auth into the FireStore Database collection
+                                User user = new User(userId, name, phone, password, email, country); // TODO: Save the user ID from the Auth into the FireStore Database collection
 
                                 // Save User to Firestore
                                 firestore.collection("users").add(user)
