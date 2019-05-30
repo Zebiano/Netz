@@ -7,10 +7,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button2"
+        <SurfaceView
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:text="Take Picture" />
+            android:layout_height="match_parent"
+            android:id="@+id/surfaceView"/>
     </LinearLayout>
 </RelativeLayout>

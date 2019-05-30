@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -34,16 +37,21 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 
+import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
+    //implements SurfaceHolder.Callback
 
     // Variables
     private static final String TAG = "HomeFragment";
     public ProgressDialog progressDialog;
     private static final int CAMERA_REQUEST = 1888;
+    Camera camera;
+    SurfaceView surfaceView;
+    SurfaceHolder surfaceHolder;
 
     // Firebase
     public FirebaseFirestore firestore;
@@ -75,6 +83,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
+
+        // Variables
+        /*View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        surfaceView = view.findViewById(R.id.surfaceView);
+        surfaceHolder = surfaceView.getHolder();
+
+        surfaceHolder.addCallback(this);
+        surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);*/
 
         openCamera();
 
@@ -130,6 +147,36 @@ public class HomeFragment extends Fragment {
                                     });
         }
     }
+
+    /*@Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        camera = Camera.open();
+        Camera.Parameters parameters;
+        parameters = camera.getParameters();
+
+        camera.setDisplayOrientation(90);
+        parameters.setPreviewFrameRate(30);
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
+        camera.setParameters(parameters);
+
+        try {
+            camera.setPreviewDisplay(surfaceHolder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        camera.startPreview();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }*/
 
     //
     /*public void processImage() {
