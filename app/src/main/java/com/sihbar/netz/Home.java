@@ -54,4 +54,6 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
 
         return loadFragment(fragment);
     }
+
+
 }
