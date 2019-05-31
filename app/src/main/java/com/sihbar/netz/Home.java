@@ -20,6 +20,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(this);
 
+
         loadFragment(new HomeFragment());
     }
 

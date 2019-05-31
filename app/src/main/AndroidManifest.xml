@@ -3,7 +3,7 @@
     package="com.sihbar.netz">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -15,14 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestActivity"></activity>
-
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
-            android:value="face" /> <!-- To use multiple models: android:value="face,model2,model3" -->
+            android:value="face" />
+        <!-- To use multiple models: android:value="face,model2,model3" -->
         <activity
             android:name=".Home"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"></activity>
         <activity android:name=".Login" />
         <activity android:name=".Register" />
         <activity android:name=".Launch" />
