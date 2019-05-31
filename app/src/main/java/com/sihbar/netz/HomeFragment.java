@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment{
     @Override
     public void onStop() {
         Log.d(TAG, "onStop: ");
+
         cameraKitView.onStop();
         super.onStop();
     }
