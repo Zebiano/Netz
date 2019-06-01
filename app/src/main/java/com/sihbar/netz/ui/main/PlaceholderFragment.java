@@ -1,17 +1,8 @@
 package com.sihbar.netz.ui.main;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.support.annotation.Nullable;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-
-import com.sihbar.netz.R;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -41,7 +32,7 @@ public class PlaceholderFragment extends Fragment {
         pageViewModel.setIndex(index);
     }
 
-    @Override
+    /*@Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -54,5 +45,5 @@ public class PlaceholderFragment extends Fragment {
             }
         });
         return root;
-    }
+    }*/
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,21 +33,25 @@ public class HomeFragment extends Fragment{
 
     @Override
     public void onStart() {
+        Log.d(TAG, "onStart: ");
         super.onStart();
         cameraKitView.onStart();
     }
-    @Override
+    /*@Override
     public void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
         cameraKitView.onResume();
     }
     @Override
     public void onPause() {
+        Log.d(TAG, "onPause: ");
         cameraKitView.onPause();
         super.onPause();
-    }
+    }*/
     @Override
     public void onStop() {
+        Log.d(TAG, "onStop: ");
         cameraKitView.onStop();
         super.onStop();
     }
