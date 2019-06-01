@@ -1,17 +1,24 @@
 package com.sihbar.netz;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.annotation.NonNull;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toolbar;
 
 public class Home extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    // Variables
     Toolbar toolbar;
+
+    // Fragments
+    HomeFragment homeFragment;
+    ContactsFragment contactsFragment;
+    EventsFragment eventsFragment;
+    ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,5 +62,18 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
         return loadFragment(fragment);
     }
 
+    // ButtonClicks for all fragments
+    // Home
+    public void homeCaptureImage(View view) {
+        homeFragment.captureImage(view);
+    }
+    public void homeChangeMode(View view) {
+        homeFragment.changeMode(view);
+    }
 
+    // Events
+
+    // Contacts
+
+    // Profile
 }

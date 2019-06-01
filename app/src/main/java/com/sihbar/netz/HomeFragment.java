@@ -60,4 +60,22 @@ public class HomeFragment extends Fragment{
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+    // Capture Image
+    public void captureImage (View view) {
+        /*switch(view.getId()) {
+            // Just like you were doing
+        }*/
+        //Log.d(TAG, "captureImage: " + view.getId());
+        /*cameraKitView.captureImage(new  CameraKitView.ImageCallback() {
+            @Override
+            public void onImage(CameraKitView cameraKitView, final byte[] capturedImage) {
+                // capturedImage contains the image from the CameraKitView.
+            }
+        });*/
+    }
+    
+    public void changeMode(View view) {
+        Log.d(TAG, "changeMode: haha changed mode!");
+    }
 }
