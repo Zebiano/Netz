@@ -18,6 +18,9 @@
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="face" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
         <!-- To use multiple models: android:value="face,model2,model3" -->
         <activity
             android:name=".Home"
