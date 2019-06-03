@@ -85,5 +85,11 @@
             android:layout_marginHorizontal="55dp"
             android:onClick="clickButtonRegister"
             android:text="Register" />
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="319dp"
+            android:layout_height="72dp"
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

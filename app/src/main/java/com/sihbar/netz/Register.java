@@ -2,6 +2,9 @@ package com.sihbar.netz;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.zxing.WriterException;
+
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 
 public class Register extends AppCompatActivity {
 
@@ -32,6 +40,10 @@ public class Register extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextCountry;
     private ProgressDialog progressDialog;
+    private String qrCode;
+    private Bitmap bitmap;
+    private ImageView qrImage;
+    QRGEncoder qrgEncoder;
 
     // Firebase
     private FirebaseAuth firebaseAuth;
@@ -56,6 +68,12 @@ public class Register extends AppCompatActivity {
         editTextPasswordR = (EditText) findViewById(R.id.editTextPasswordR);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextCountry = (EditText) findViewById(R.id.editTextCountry);
+        qrImage = (ImageView) findViewById(R.id.img);
+
+        //QR code
+        qrgEncoder = new QRGEncoder("Jorge", null, QRGContents.Type.TEXT, 150);
+
+        createQR(qrgEncoder);
     }
 
     // OnClick of ButtonRegister
@@ -129,6 +147,24 @@ public class Register extends AppCompatActivity {
                             }
                         }
                     });
+        }
+    }
+
+    private void createQR(QRGEncoder qrgEncoder) {
+        String TAG = "GenerateQRCode";
+
+        Log.d(TAG, "qrcode:success");
+
+        try {
+            Log.d(TAG, "bitmap:success");
+
+            // Getting QR-Code as Bitmap
+            bitmap = qrgEncoder.encodeAsBitmap();
+
+            // Setting Bitmap to ImageView
+            qrImage.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            Log.v(TAG, e.toString());
         }
     }
 }
