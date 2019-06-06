@@ -1,42 +1,79 @@
 {
   "project_info": {
-    "project_number": "98131971636",
-    "firebase_url": "https://netz-6df21.firebaseio.com",
-    "project_id": "netz-6df21",
-    "storage_bucket": "netz-6df21.appspot.com"
+    "project_number": "618332438447",
+    "firebase_url": "https://netz-aacc1.firebaseio.com",
+    "project_id": "netz-aacc1",
+    "storage_bucket": "netz-aacc1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:98131971636:android:465707dfaef1cd06",
+        "mobilesdk_app_id": "1:618332438447:android:7f86672d83375aba",
         "android_client_info": {
-          "package_name": "com.sihbar.netz"
+          "package_name": "com.shibar.netz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "98131971636-e0mjaajej4f58qpm1a8d3vlvdons5hdh.apps.googleusercontent.com",
+          "client_id": "618332438447-ejci189v9vv2kuvd620cc8egep2ae3pg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sihbar.netz",
-            "certificate_hash": "98f9afae0093f5296e77d2ee10df1b10fb5d7824"
+            "package_name": "com.shibar.netz",
+            "certificate_hash": "c4a1b2d7d2dca346fe73606abccc348ccc33688e"
           }
         },
         {
-          "client_id": "98131971636-695rvnlgusor31odl2tckh6jdss00cob.apps.googleusercontent.com",
+          "client_id": "618332438447-oe926o66j3ldcae1a936ppq0p1ihknkc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBTcu9h_3B0CU-4edRhIsXFw1vMeDwmJDk"
+          "current_key": "AIzaSyAA2CwMvrM0r86IgutleC1DKYPqjM6TDPg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "98131971636-695rvnlgusor31odl2tckh6jdss00cob.apps.googleusercontent.com",
+              "client_id": "618332438447-oe926o66j3ldcae1a936ppq0p1ihknkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618332438447:android:465707dfaef1cd06",
+        "android_client_info": {
+          "package_name": "com.sihbar.netz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618332438447-f868ra4ak8jr1vr586b1q1pb0oro53dt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sihbar.netz",
+            "certificate_hash": "299c71d3cf8660c508c84ee34a4f80a0217ab4dd"
+          }
+        },
+        {
+          "client_id": "618332438447-oe926o66j3ldcae1a936ppq0p1ihknkc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA2CwMvrM0r86IgutleC1DKYPqjM6TDPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618332438447-oe926o66j3ldcae1a936ppq0p1ihknkc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

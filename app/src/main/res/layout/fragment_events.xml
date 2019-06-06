@@ -29,4 +29,12 @@
             android:layout_height="wrap_content"
             android:text="Wednesday" />
     </android.support.design.widget.TabLayout>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="212dp"
+        tools:srcCompat="@tools:sample/avatars" />
 </android.support.constraint.ConstraintLayout>
