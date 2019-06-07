@@ -26,7 +26,8 @@ public class Launch extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        // TODO (crashes app and idk why) Check if user is signed in
+        // TODO: Check if user is signed in
+        // FIXME: Crashes app and idk why
         /*if (firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(this, Home.class));
             Log.d(TAG, "boas");
