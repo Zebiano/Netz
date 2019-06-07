@@ -3,16 +3,17 @@ package com.sihbar.netz;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
-import android.nfc.Tag;
+import android.graphics.Point;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,18 +22,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.google.zxing.WriterException;
-
-import java.io.ByteArrayOutputStream;
-
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
+import androidmads.library.qrgenearator.QRGSaver;
 
 public class Register extends AppCompatActivity {
 
@@ -45,11 +40,6 @@ public class Register extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextCountry;
     private ProgressDialog progressDialog;
-    private Bitmap qrCode;
-    private ImageView qrImage;
-    private QRGEncoder qrgEncoder;
-    private FirebaseStorage storage;
-    private StorageReference storageRef;
 
     // Firebase
     private FirebaseAuth firebaseAuth;
@@ -68,24 +58,12 @@ public class Register extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         // EditTexts
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextPasswordR = (EditText) findViewById(R.id.editTextPasswordR);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextCountry = (EditText) findViewById(R.id.editTextCountry);
-        qrImage = (ImageView) findViewById(R.id.img);
-        storageRef = FirebaseStorage.getInstance().getReference();
-
-
-        //QR code
-        qrgEncoder = new QRGEncoder("Jorge", null, QRGContents.Type.TEXT, 150);
-
-
-        createQR(qrgEncoder);
-
-        saveQR(qrCode);
-
+        editTextName = findViewById(R.id.editTextName);
+        editTextPhone =  findViewById(R.id.editTextPhone);
+        editTextPassword =  findViewById(R.id.editTextPassword);
+        editTextPasswordR =  findViewById(R.id.editTextPasswordR);
+        editTextEmail =  findViewById(R.id.editTextEmail);
+        editTextCountry =  findViewById(R.id.editTextCountry);
     }
 
     // OnClick of ButtonRegister
@@ -113,6 +91,9 @@ public class Register extends AppCompatActivity {
         } else {
             progressDialog.setMessage("Registering User...");
             progressDialog.show();
+
+            // Generate qr code for this user
+            generateQrCode();
 
             Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser());
 
@@ -161,46 +142,29 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    private void createQR(QRGEncoder qrgEncoder) {
-        String TAG = "GenerateQRCode";
+    // Generates and saves a QR code to phone
+    public void generateQrCode() {
+        Log.d(TAG, "generateQrCode: ");
 
-        Log.d(TAG, "qrcode:success");
-
+        // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
+        QRGEncoder qrgEncoder = new QRGEncoder("oh ye", null, QRGContents.Type.TEXT, 810);
         try {
-            Log.d(TAG, "bitmap:success");
-
             // Getting QR-Code as Bitmap
-            qrCode = qrgEncoder.encodeAsBitmap();
-
-            // Setting Bitmap to ImageView
-            qrImage.setImageBitmap(qrCode);
+            Bitmap bitmap = qrgEncoder.encodeAsBitmap();
+            try {
+                boolean save = QRGSaver.save(
+                        Environment.getExternalStorageDirectory().getPath() + "/QRCode/",
+                        "Test",
+                        bitmap,
+                        QRGContents.ImageType.IMAGE_JPEG
+                );
+                String result = save ? "Image Saved" : "Image Not Saved";
+                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } catch (WriterException e) {
             Log.v(TAG, e.toString());
         }
-    }
-
-    private void saveQR(Bitmap bitmap){
-        storage = FirebaseStorage.getInstance();
-
-        StorageReference storageReference = storage.getReference();
-
-       StorageReference ref = storageReference.child("qrcodes.png");
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        ref.putBytes(data).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-            }
-        });
     }
 }
