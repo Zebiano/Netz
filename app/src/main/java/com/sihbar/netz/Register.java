@@ -1,9 +1,11 @@
 package com.sihbar.netz;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +26,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.zxing.WriterException;
+
+import java.io.File;
+
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import androidmads.library.qrgenearator.QRGSaver;
@@ -44,6 +52,7 @@ public class Register extends AppCompatActivity {
     // Firebase
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
+    private FirebaseStorage firebaseStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,33 +62,29 @@ public class Register extends AppCompatActivity {
         // Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
 
         // ProgressBar
         progressDialog = new ProgressDialog(this);
 
         // EditTexts
         editTextName = findViewById(R.id.editTextName);
-        editTextPhone =  findViewById(R.id.editTextPhone);
-        editTextPassword =  findViewById(R.id.editTextPassword);
-        editTextPasswordR =  findViewById(R.id.editTextPasswordR);
-        editTextEmail =  findViewById(R.id.editTextEmail);
-        editTextCountry =  findViewById(R.id.editTextCountry);
+        editTextPhone = findViewById(R.id.editTextPhone);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextPasswordR = findViewById(R.id.editTextPasswordR);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextCountry = findViewById(R.id.editTextCountry);
     }
 
     // OnClick of ButtonRegister
     public void clickButtonRegister(View view) {
-        final String name = editTextName.getText().toString().trim();
-        final String phone = editTextPhone.getText().toString().trim();
-        final String password = editTextPassword.getText().toString().trim();
-        final String passwordR = editTextPasswordR.getText().toString().trim();
-        final String email = editTextEmail.getText().toString().trim();
-        final String country = editTextCountry.getText().toString().trim();
-        //Log.d(TAG, name);
-        //Log.d(TAG, phone);
-        //Log.d(TAG, password);
-        //Log.d(TAG, passwordR);
-        //Log.d(TAG, email);
-        //Log.d(TAG, country);
+        String name = editTextName.getText().toString().trim();
+        String phone = editTextPhone.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        String passwordR = editTextPasswordR.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String country = editTextCountry.getText().toString().trim();
+        //Log.d(TAG, "clickButtonRegister: " + name + ", " + phone + ", " + password + ", " + passwordR + ", " + email + ", " + country + ".");
 
         // If input is empty
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password) || TextUtils.isEmpty(passwordR) || TextUtils.isEmpty(email) || TextUtils.isEmpty(country)) {
@@ -92,60 +97,78 @@ public class Register extends AppCompatActivity {
             progressDialog.setMessage("Registering User...");
             progressDialog.show();
 
-            // Generate qr code for this user
-            generateQrCode();
-
-            Log.d(TAG, "onComplete: " + firebaseAuth.getCurrentUser());
-
-            // Create a user on the Firebase Auth
-            firebaseAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            //Log.d(TAG, "onComplete");
-
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "createUserWithEmail:success");
-
-                                String userId = firebaseAuth.getUid();
-
-                                // Create new User with our own class
-                                User user = new User(userId, name, phone, password, email, country);
-                                // Save User to Firestore
-                                firestore.collection("users").add(user)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.d(TAG, "addUser:success");
-
-                                                progressDialog.cancel();
-                                                Toast.makeText(Register.this, "Successfully registered User!", Toast.LENGTH_SHORT).show();
-
-                                                // Redirect to login
-                                                startActivity(new Intent(Register.this, Login.class));
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception error) {
-                                                Log.d(TAG, "addUser:failure", error);
-                                                progressDialog.cancel();
-                                            }
-                                        });
-                            } else {
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                progressDialog.cancel();
-                                Toast.makeText(Register.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+            // Create a user on the Firebase Auth and if successful saves to databse
+            createAuthUser(name, phone, password, email, country);
         }
     }
 
-    // Generates and saves a QR code to phone
-    public void generateQrCode() {
+    // Creates a new Auth user in the firebase
+    public void createAuthUser(final String name, final String phone, final String password, final String email, final String country) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //Log.d(TAG, "onComplete");
+
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "createUserWithEmail:success");
+
+                            // Saves user to firebase
+                            saveUserToFirebase(name, phone, password, email, country);
+                        } else {
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            progressDialog.cancel();
+                            Toast.makeText(Register.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
+    // Saves the user info onto the firebase database
+    public void saveUserToFirebase(final String name, final String phone, final String password, final String email, final String country) {
+        final String userId = firebaseAuth.getUid();
+
+        // Create new User with our own class
+        User user = new User(
+                userId,
+                name,
+                phone,
+                password,
+                email,
+                country
+        );
+
+        // Save User to Firestore
+        firestore.collection("users").add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "onSuccess: Save user to firestore");
+
+                        // Generate a qr code for this user and save it onto the frbase storage
+                        generateQrCode(userId);
+
+                        progressDialog.cancel();
+                        Toast.makeText(Register.this, "Successfully registered User!", Toast.LENGTH_SHORT).show();
+
+                        // Redirect to login
+                        startActivity(new Intent(Register.this, Login.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception error) {
+                        Log.d(TAG, "addUser:failure", error);
+                        progressDialog.cancel();
+                    }
+                });
+    }
+
+    // Generates and saves a QR code to phones cache
+    public void generateQrCode(String userId) {
         Log.d(TAG, "generateQrCode: ");
 
+        // TODO: Decide what to save on the qr codes of the users.
         // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
         QRGEncoder qrgEncoder = new QRGEncoder("oh ye", null, QRGContents.Type.TEXT, 810);
         try {
@@ -153,18 +176,44 @@ public class Register extends AppCompatActivity {
             Bitmap bitmap = qrgEncoder.encodeAsBitmap();
             try {
                 boolean save = QRGSaver.save(
-                        Environment.getExternalStorageDirectory().getPath() + "/QRCode/",
-                        "Test",
+                        this.getCacheDir() + "/",
+                        "qrcode",
                         bitmap,
                         QRGContents.ImageType.IMAGE_JPEG
                 );
                 String result = save ? "Image Saved" : "Image Not Saved";
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
+                // Saves qr code onto firebase storage
+                saveQrCode(userId);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } catch (WriterException e) {
             Log.v(TAG, e.toString());
         }
+    }
+
+    // Saves QR Code onto the firebase storage
+    public void saveQrCode(String userId) {
+        StorageReference qrCodesRef = firebaseStorage.getReference().child("qrcodes/" + userId);
+        Uri qrcode = Uri.fromFile(new File(this.getCacheDir() + "/qrcode.jpg"));
+        UploadTask uploadTask = qrCodesRef.putFile(qrcode);
+
+        // Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d(TAG, "onSuccess: " + taskSnapshot);
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Log.d(TAG, "onFailure: Fuck");
+            }
+        });
     }
 }

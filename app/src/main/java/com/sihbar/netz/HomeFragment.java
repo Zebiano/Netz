@@ -49,13 +49,6 @@ public class HomeFragment extends Fragment {
     // CameraKit
     private CameraKitView cameraKitView;
 
-    // Qr code options
-    FirebaseVisionBarcodeDetectorOptions barcodeOptions =
-            new FirebaseVisionBarcodeDetectorOptions.Builder()
-                    .setBarcodeFormats(
-                            FirebaseVisionBarcode.FORMAT_QR_CODE)
-                    .build();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -125,7 +118,6 @@ public class HomeFragment extends Fragment {
 
     // Reads QR code by saving an image to the cache, then analyzing it and then deleting it
     public void readQrImage(final byte[] capturedImage) {
-        //File savedPhoto = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
         File savedPhoto = new File(getActivity().getCacheDir(), "photo.jpg");
         try {
             Log.d(TAG, "readQrImage: ");
@@ -149,6 +141,14 @@ public class HomeFragment extends Fragment {
 
     public void getQrResults(FirebaseVisionImage image) {
         Log.d(TAG, "getQrResults: ");
+
+        // Qr code options
+        FirebaseVisionBarcodeDetectorOptions barcodeOptions =
+                new FirebaseVisionBarcodeDetectorOptions.Builder()
+                        .setBarcodeFormats(
+                                FirebaseVisionBarcode.FORMAT_QR_CODE)
+                        .build();
+
         // Set detector with barcodeOptions
         FirebaseVisionBarcodeDetector detector = FirebaseVision.getInstance()
                 //.getVisionBarcodeDetector();
