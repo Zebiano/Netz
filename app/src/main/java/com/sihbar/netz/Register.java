@@ -197,14 +197,19 @@ public class Register extends AppCompatActivity {
     // Saves QR Code onto the firebase storage
     public void saveQrCode(String userId) {
         StorageReference qrCodesRef = firebaseStorage.getReference().child("qrcodes/" + userId);
-        Uri qrcode = Uri.fromFile(new File(this.getCacheDir() + "/qrcode.jpg"));
-        UploadTask uploadTask = qrCodesRef.putFile(qrcode);
+        final File qrcode = new File(this.getCacheDir() + "/qrcode.jpg");
+        final Uri uri = Uri.fromFile(qrcode);
+        UploadTask uploadTask = qrCodesRef.putFile(uri);
 
-        // Register observers to listen for when the download is done or if it fails
+        // Register observers to listen for when the upload is done or if it fails
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.d(TAG, "onSuccess: " + taskSnapshot);
+
+                // Delete cache with qr code
+                qrcode.delete();
+
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
             }
@@ -212,6 +217,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
+                // TODO: In case qr code generation fails, say the registration failed. De certa forma tamos em callback hell porcausa do try catch...
                 Log.d(TAG, "onFailure: Fuck");
             }
         });
