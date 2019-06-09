@@ -129,7 +129,7 @@ public class Register extends AppCompatActivity {
         final String userId = firebaseAuth.getUid();
 
         // Create new User with our own class
-        User user = new User(
+        final User user = new User(
                 userId,
                 name,
                 phone,
@@ -146,7 +146,7 @@ public class Register extends AppCompatActivity {
                         Log.d(TAG, "onSuccess: Save user to firestore");
 
                         // Generate a qr code for this user and save it onto the frbase storage
-                        generateQrCode(userId);
+                        generateQrCode(user);
 
                         progressDialog.cancel();
                         Toast.makeText(Register.this, "Successfully registered User!", Toast.LENGTH_SHORT).show();
@@ -165,12 +165,25 @@ public class Register extends AppCompatActivity {
     }
 
     // Generates and saves a QR code to phones cache
-    public void generateQrCode(String userId) {
+    public void generateQrCode(User user) {
         Log.d(TAG, "generateQrCode: ");
 
-        // TODO: Decide what to save on the qr codes of the users.
+        // TODO: Quando um user atualizar a informacao dele no perfil, o qr code vai ter que atualizar tmb
+        // TODO: Preencher a restante informacao
         // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
-        QRGEncoder qrgEncoder = new QRGEncoder("oh ye", null, QRGContents.Type.TEXT, 810);
+        QRGEncoder qrgEncoder = new QRGEncoder(
+                "MECARD:N:" + user.getName() + ";" +
+                "ORG:null;" +
+                "TITLE:null;" +
+                "TEL:" + user.getPhone() + ";" +
+                "URL:null;" +
+                "EMAIL:" + user.getEmail() + ";" +
+                "ADR:" + user.getCountry() + ";" +
+                "NOTE:null;",
+                null,
+                QRGContents.Type.TEXT,
+                810
+        );
         try {
             // Getting QR-Code as Bitmap
             Bitmap bitmap = qrgEncoder.encodeAsBitmap();
@@ -185,7 +198,7 @@ public class Register extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
 
                 // Saves qr code onto firebase storage
-                saveQrCode(userId);
+                saveQrCode(user.getUserId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
