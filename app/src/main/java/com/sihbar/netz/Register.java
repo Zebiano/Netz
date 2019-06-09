@@ -170,7 +170,7 @@ public class Register extends AppCompatActivity {
 
         // TODO: Quando um user atualizar a informacao dele no perfil, o qr code vai ter que atualizar tmb
         // TODO: Preencher a restante informacao
-        // Initializing the QR Encoder with your value to be encoded, type you required and Dimension
+        // Generates a new qr code
         QRGEncoder qrgEncoder = new QRGEncoder(
                 "MECARD:N:" + user.getName() + ";" +
                 "ORG:null;" +

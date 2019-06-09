@@ -38,6 +38,7 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    // TODO: Maybe put this in the home.java class and not the fragment so it only gets called once?
     // Gets the users data from the database
     public void getUserData() {
         Log.d(TAG, "getUserData: ");

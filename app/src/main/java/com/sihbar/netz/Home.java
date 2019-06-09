@@ -11,9 +11,6 @@ import android.widget.Toolbar;
 
 public class Home extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    // Variables
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +18,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(this);
 
-
+        // Load Fragment
         loadFragment(new HomeFragment());
     }
 
