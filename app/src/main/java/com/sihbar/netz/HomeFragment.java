@@ -1,6 +1,7 @@
 package com.sihbar.netz;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -15,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -171,6 +173,14 @@ public class HomeFragment extends Fragment {
                             // See API reference for complete list of supported types
                             Log.d(TAG, "onSuccess: " + valueType);
                             Log.d(TAG, "onSuccess: " + rawValue);
+
+                            // TODO: Open an activity that shows the profile o another user! Not a fragment... Makes things easier.
+                            // Launch profile fragment
+                            Fragment profileFragment= new ProfileFragment();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, profileFragment);
+                            transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                            transaction.commit();
                         }
                     }
                 })
