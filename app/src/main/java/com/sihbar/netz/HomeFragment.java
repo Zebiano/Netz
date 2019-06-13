@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
     // FIXME: Camera stops if you tab out of the app and then back in.
     @Override
     public void onStart() {
-        Log.d(TAG, "onStart: ");
+        Log.d(TAG, "onStart: coco ");
         super.onStart();
         cameraKitView.onStart();
     }
