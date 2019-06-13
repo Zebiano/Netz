@@ -27,6 +27,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             return true;
+            // jigwahdiugawd
         }
         return false;
     }
