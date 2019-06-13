@@ -18,7 +18,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(this);
 
-        // Load Fragment oisajdja
+        // Load Fragment
         loadFragment(new HomeFragment());
     }
 
@@ -27,7 +27,6 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             return true;
-            // jigwahdiugawd
         }
         return false;
     }
