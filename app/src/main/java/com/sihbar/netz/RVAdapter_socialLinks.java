@@ -36,12 +36,15 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_social_links, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
 
-        return null;
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.d(TAG, "onBindViewHolder: ");
+
+        Log.d(TAG, "onBindViewHolder: " + arrayLinks);
+        Log.d(TAG, "onBindViewHolder: " + arrayLogos);
 
         // Set image logos
         Glide.with(context)
@@ -70,6 +73,9 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            logo = itemView.findViewById(R.id.imageViewLogo);
+            link = itemView.findViewById(R.id.textViewLink);
+            parentLayout = itemView.findViewById(R.id.ParentLayout);
         }
     }
 }

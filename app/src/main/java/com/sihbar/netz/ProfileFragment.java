@@ -4,21 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.core.Query;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -56,6 +51,28 @@ public class ProfileFragment extends Fragment {
         // Sets Links array
         arrayLinks = (ArrayList<String>) userDocument.get("links");
 
+        // TODO: Save logos onto resources and then save them onto the arraysLogos
+        // Sets logos arrays
+        for (int i = 0; i < arrayLinks.size(); i++) {
+            Log.d(TAG, "laodArrays: " + arrayLinks.get(i));
+            if (arrayLinks.get(i).contains("twitter")) {
+                Log.d(TAG, "laodArrays: Twitter!");
+                //arrayLogos.add(twitter.png);
+            } else if (arrayLinks.get(i).contains("facebook")) {
+                Log.d(TAG, "laodArrays: facebook!");
+            } else if (arrayLinks.get(i).contains("linkedin")) {
+                Log.d(TAG, "laodArrays: linkedin!");
+            } else if (arrayLinks.get(i).contains("snapchat")) {
+                Log.d(TAG, "laodArrays: snapchat!");
+            } else if (arrayLinks.get(i).contains("instagram")) {
+                Log.d(TAG, "laodArrays: instagram!");
+            } else {
+                Log.d(TAG, "laodArrays: Nothing.");
+            }
+        }
+        arrayLogos.add("https://images.pexels.com/photos/1226302/pexels-photo-1226302.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500");
+        arrayLogos.add("https://images.pexels.com/photos/1226302/pexels-photo-1226302.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500");
+
         initRecyclerView(view);
     }
 
@@ -64,7 +81,8 @@ public class ProfileFragment extends Fragment {
         Log.d(TAG, "initRecyclerView: ");
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        RVAdapter_socialLinks adapter = new RVAdapter_socialLinks(this, ) // TODO: https://www.youtube.com/watch?v=Vyqz_-sJGFk 19:54
-
+        RVAdapter_socialLinks adapter = new RVAdapter_socialLinks(getActivity(), arrayLogos, arrayLinks);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

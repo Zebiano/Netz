@@ -26,13 +26,13 @@
         android:id="@+id/imageButtonEdit"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="2dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageButton
         android:id="@+id/imageButtonDelete"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="2dp"
         tools:srcCompat="@tools:sample/avatars" />
 </LinearLayout>
