@@ -22,7 +22,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
         loadFragment(new HomeFragment());
     }
 
-    private boolean loadFragment(Fragment fragment){
+    public boolean loadFragment(Fragment fragment){
         if(fragment != null){
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
@@ -48,8 +48,13 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
             case R.id.navigation_profile:
                 fragment = new ProfileFragment();
                 break;
+
         }
 
         return loadFragment(fragment);
+    }
+
+    public void openQR(){
+        loadFragment(new DisplayQR());
     }
 }

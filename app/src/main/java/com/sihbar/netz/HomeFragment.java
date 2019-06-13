@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
 
         // Buttons
         Button btnTakePicture = view.findViewById(R.id.btnTakePicture);
-        Button btnChangeMode = view.findViewById(R.id.btnChangeMode);
+        Button btnChangeMode = view.findViewById(R.id.btnDisplayQR);
 
         // OnClick Button Take Picture
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +85,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: btnChangeMode");
+
+                // TODO: Open an activity that shows the profile o another user! Not a fragment... Makes things easier.
+                // Launch profile fragment
+                Fragment displayQR= new DisplayQR();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, displayQR);
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
             }
         });
 
@@ -192,4 +200,7 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
+
+
 }
+
