@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,57 +18,53 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.core.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
     // Variables
     private static final String TAG = "ProfileFragment";
+    DocumentSnapshot userDocument;
 
     // Arrays
     private ArrayList<String> arrayLinks = new ArrayList<>();
     private ArrayList<String> arrayLogos = new ArrayList<>();
 
-    // Firebase
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Gets the user data
-        getUserData();
-
         return inflater.inflate(R.layout.fragment_profile, null);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        // Variables
+        Home home = (Home)getActivity();
+        userDocument = home.userDocument;
+
+        // Loads arrays with user content
+        laodArrays(view);
+
         super.onViewCreated(view, savedInstanceState);
     }
 
     // Loads Arrays with data
-    private void loadArrays() {
-        // TODO
+    private void laodArrays(View view) {
+        Log.d(TAG, "laodArrays: " + userDocument.getData());
+
+        // Sets Links array
+        arrayLinks = (ArrayList<String>) userDocument.get("links");
+
+        initRecyclerView(view);
     }
 
-    // TODO: Maybe put this in the home.java class and not the fragment so it only gets called once?
-    // Gets the users data from the database
-    public void getUserData() {
-        Log.d(TAG, "getUserData: ");
-        DocumentReference docRef = firebaseFirestore.collection("users").document("FMPuDOWe1vRrcHmn32QH");
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
+    // Initialize recyclerView
+    private void initRecyclerView (View view) {
+        Log.d(TAG, "initRecyclerView: ");
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RVAdapter_socialLinks adapter = new RVAdapter_socialLinks(this, ) // TODO: https://www.youtube.com/watch?v=Vyqz_-sJGFk 19:54
+
     }
 }

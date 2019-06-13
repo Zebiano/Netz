@@ -128,6 +128,7 @@ public class Register extends AppCompatActivity {
     public void saveUserToFirebase(final String name, final String phone, final String password, final String email, final String country) {
         final String userId = firebaseAuth.getUid();
 
+        // TODO: Add links to user
         // Create new User with our own class
         final User user = new User(
                 userId,
