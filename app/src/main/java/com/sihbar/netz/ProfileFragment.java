@@ -16,10 +16,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.core.Query;
 
+import java.util.ArrayList;
+
 public class ProfileFragment extends Fragment {
 
     // Variables
     private static final String TAG = "ProfileFragment";
+
+    // Arrays
+    private ArrayList<String> arrayLinks = new ArrayList<>();
+    private ArrayList<String> arrayLogos = new ArrayList<>();
 
     // Firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -36,6 +42,11 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    // Loads Arrays with data
+    private void loadArrays() {
+        // TODO
     }
 
     // TODO: Maybe put this in the home.java class and not the fragment so it only gets called once?
