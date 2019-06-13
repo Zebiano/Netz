@@ -57,6 +57,7 @@ public class DisplayQR extends Fragment {
 
         // Reference to an image file in Cloud Storage
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference qrCodesRef = storageReference.child("qrcodes/" + userID);
 
         StorageReference qrReferece = storageReference.child("qrcodes/" + userID + ".jpeg");
 
@@ -65,8 +66,8 @@ public class DisplayQR extends Fragment {
 
 // Download directly from StorageReference using Glide
 // (See MyAppGlideModule for Loader registration)
-        GlideApp.with(this /* context */)
-                .load(storageReference)
+        GlideApp.with( DisplayQR.this/* context */)
+                .load(qrCodesRef)
                 .into(qrcode);
 
     }
