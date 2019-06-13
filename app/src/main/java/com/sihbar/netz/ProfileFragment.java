@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -20,6 +23,11 @@ public class ProfileFragment extends Fragment {
     // Variables
     private static final String TAG = "ProfileFragment";
     DocumentSnapshot userDocument;
+
+    TextView textViewName;
+    TextView textViewWork;
+    TextView textViewCountry;
+    TextView textViewBio;
 
     // Arrays
     private ArrayList<String> arrayLinks = new ArrayList<>();
@@ -37,11 +45,37 @@ public class ProfileFragment extends Fragment {
         // Variables
         Home home = (Home)getActivity();
         userDocument = home.userDocument;
+        textViewName = view.findViewById(R.id.textViewName);
+        textViewWork = view.findViewById(R.id.textViewWork);
+        textViewCountry = view.findViewById(R.id.textViewCountry);
+        textViewBio = view.findViewById(R.id.textViewBio);
+
+        // Load user info
+        loadUserInfo(view);
+
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    // Initialize recyclerView
+    private void initRecyclerView (View view) {
+        Log.d(TAG, "initRecyclerView: ");
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        RVAdapter_socialLinks adapter = new RVAdapter_socialLinks(getActivity(), arrayLogos, arrayLinks);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    // Loads user info
+    public void loadUserInfo(View view) {
+
+        textViewName.setText(userDocument.getString("name"));
+        textViewWork.setText(userDocument.getString("occupation"));
+        textViewCountry.setText(userDocument.getString("country"));
+        textViewBio.setText(userDocument.getString("bio"));
 
         // Loads arrays with user content
         laodArrays(view);
-
-        super.onViewCreated(view, savedInstanceState);
     }
 
     // Loads Arrays with data
@@ -68,21 +102,12 @@ public class ProfileFragment extends Fragment {
                 Log.d(TAG, "laodArrays: instagram!");
             } else {
                 Log.d(TAG, "laodArrays: Nothing.");
+                //arrayLogos.add(netz/default.png);
             }
         }
         arrayLogos.add("https://images.pexels.com/photos/1226302/pexels-photo-1226302.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500");
         arrayLogos.add("https://images.pexels.com/photos/1226302/pexels-photo-1226302.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500");
 
         initRecyclerView(view);
-    }
-
-    // Initialize recyclerView
-    private void initRecyclerView (View view) {
-        Log.d(TAG, "initRecyclerView: ");
-
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        RVAdapter_socialLinks adapter = new RVAdapter_socialLinks(getActivity(), arrayLogos, arrayLinks);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

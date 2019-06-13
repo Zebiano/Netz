@@ -90,6 +90,7 @@ public class Register extends AppCompatActivity {
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password) || TextUtils.isEmpty(passwordR) || TextUtils.isEmpty(email) || TextUtils.isEmpty(country)) {
             Toast.makeText(this, "Please enter valid values!", Toast.LENGTH_LONG).show();
             return;
+            // TODO: Check if password is at least 6 characters long
         } else if (!password.equals(passwordR)) {
             Toast.makeText(this, "The passwords don't match!", Toast.LENGTH_LONG).show();
             return;

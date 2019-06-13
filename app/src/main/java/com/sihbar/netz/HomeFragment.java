@@ -110,13 +110,13 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         Log.d(TAG, "onStart: coco ");
         super.onStart();
-        cameraKitView.onStart();
+        //cameraKitView.onStart();
     }
 
     @Override
     public void onStop() {
         Log.d(TAG, "onStop: ");
-        cameraKitView.onStop();
+        //cameraKitView.onStop();
         super.onStop();
     }
 
