@@ -20,10 +20,10 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     private static final String TAG = "RVAdapter_socialLinks";
 
     private Context context;
-    private ArrayList<String> arrayLogos = new ArrayList<>();
+    ArrayList<Integer> arrayLogos = new ArrayList<>();
     private ArrayList<String> arrayLinks = new ArrayList<>();
 
-    public RVAdapter_socialLinks(Context context, ArrayList<String> arrayLogos, ArrayList<String> arrayLinks) {
+    public RVAdapter_socialLinks(Context context, ArrayList<Integer> arrayLogos, ArrayList<String> arrayLinks) {
         this.context = context;
         this.arrayLogos = arrayLogos;
         this.arrayLinks = arrayLinks;
@@ -41,14 +41,11 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Log.d(TAG, "onBindViewHolder: ");
-
-        Log.d(TAG, "onBindViewHolder: " + arrayLinks);
-        Log.d(TAG, "onBindViewHolder: " + arrayLogos);
+        //Log.d(TAG, "onBindViewHolder: " + arrayLinks.get(i));
+        //Log.d(TAG, "onBindViewHolder: " + arrayLogos.get(i));
 
         // Set image logos
         Glide.with(context)
-                .asBitmap()
                 .load(arrayLogos.get(i))
                 .into(viewHolder.logo);
 

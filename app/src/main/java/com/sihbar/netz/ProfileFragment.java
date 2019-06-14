@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
 
     // Arrays
     private ArrayList<String> arrayLinks = new ArrayList<>();
-    private ArrayList<String> arrayLogos = new ArrayList<>();
+    ArrayList<Integer> arrayLogos = new ArrayList<>();
 
     @Nullable
     @Override
@@ -56,6 +56,53 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    // Loads Arrays with data
+    private void laodArrays(View view) {
+        Log.d(TAG, "laodArrays: " + userDocument.getData());
+
+        // Sets Links array
+        arrayLinks = (ArrayList<String>) userDocument.get("links");
+
+        // Sets logos arrays
+        for (int i = 0; i < arrayLinks.size(); i++) {
+            Log.d(TAG, "laodArrays: " + arrayLinks.get(i));
+            if (arrayLinks.get(i).contains("facebook")) {
+                Log.d(TAG, "laodArrays: Facebook!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_facebook);
+            } else if (arrayLinks.get(i).contains("github")) {
+                Log.d(TAG, "laodArrays: Github!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_github);
+            } else if (arrayLinks.get(i).contains("instagram")) {
+                Log.d(TAG, "laodArrays: Instagram!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_instagram);
+            } else if (arrayLinks.get(i).contains("linkedin")) {
+                Log.d(TAG, "laodArrays: LinkedIn!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_linkedin);
+            } else if (arrayLinks.get(i).contains("pinterest")) {
+                Log.d(TAG, "laodArrays: Pinterest!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_pinterest);
+            } else if (arrayLinks.get(i).contains("slack")) {
+                Log.d(TAG, "laodArrays: Slack!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_slack);
+            } else if (arrayLinks.get(i).contains("snapchat")) {
+                Log.d(TAG, "laodArrays: Snapchat!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_snapchat);
+            } else if (arrayLinks.get(i).contains("twitter")) {
+                Log.d(TAG, "laodArrays: Twitter!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_twitter);
+            } else if (arrayLinks.get(i).contains("youtube")) {
+                Log.d(TAG, "laodArrays: Youtube!");
+                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_youtube);
+            } else {
+                Log.d(TAG, "laodArrays: Not recognized: " + arrayLinks.get(i));
+                arrayLogos.add(R.drawable.ic__ionicons_svg_md_warning);
+            }
+        }
+
+        // Initialises the recycler view
+        initRecyclerView(view);
+    }
+
     // Initialize recyclerView
     private void initRecyclerView (View view) {
         Log.d(TAG, "initRecyclerView: ");
@@ -76,38 +123,5 @@ public class ProfileFragment extends Fragment {
 
         // Loads arrays with user content
         laodArrays(view);
-    }
-
-    // Loads Arrays with data
-    private void laodArrays(View view) {
-        Log.d(TAG, "laodArrays: " + userDocument.getData());
-
-        // Sets Links array
-        arrayLinks = (ArrayList<String>) userDocument.get("links");
-
-        // TODO: Save logos onto resources and then save them onto the arraysLogos
-        // Sets logos arrays
-        for (int i = 0; i < arrayLinks.size(); i++) {
-            Log.d(TAG, "laodArrays: " + arrayLinks.get(i));
-            if (arrayLinks.get(i).contains("twitter")) {
-                Log.d(TAG, "laodArrays: Twitter!");
-                //arrayLogos.add(twitter.png);
-            } else if (arrayLinks.get(i).contains("facebook")) {
-                Log.d(TAG, "laodArrays: facebook!");
-            } else if (arrayLinks.get(i).contains("linkedin")) {
-                Log.d(TAG, "laodArrays: linkedin!");
-            } else if (arrayLinks.get(i).contains("snapchat")) {
-                Log.d(TAG, "laodArrays: snapchat!");
-            } else if (arrayLinks.get(i).contains("instagram")) {
-                Log.d(TAG, "laodArrays: instagram!");
-            } else {
-                Log.d(TAG, "laodArrays: Nothing.");
-                //arrayLogos.add(netz/default.png);
-            }
-        }
-        arrayLogos.add("https://images.pexels.com/photos/1226302/pexels-photo-1226302.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500");
-        arrayLogos.add("https://images.pexels.com/photos/1226302/pexels-photo-1226302.jpeg?auto=format%2Ccompress&cs=tinysrgb&dpr=1&w=500");
-
-        initRecyclerView(view);
     }
 }
