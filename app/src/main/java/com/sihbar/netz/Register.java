@@ -1,20 +1,15 @@
 package com.sihbar.netz;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.net.Uri;
-import android.os.Environment;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -47,6 +42,7 @@ public class Register extends AppCompatActivity {
     private EditText editTextPasswordR;
     private EditText editTextEmail;
     private EditText editTextCountry;
+    private EditText editTextOccupation;
     private ProgressDialog progressDialog;
 
     // Firebase
@@ -74,6 +70,7 @@ public class Register extends AppCompatActivity {
         editTextPasswordR = findViewById(R.id.editTextPasswordR);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextCountry = findViewById(R.id.editTextCountry);
+        editTextOccupation = findViewById(R.id.editTextOccupation);
     }
 
     // OnClick of ButtonRegister
@@ -84,27 +81,30 @@ public class Register extends AppCompatActivity {
         String passwordR = editTextPasswordR.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String country = editTextCountry.getText().toString().trim();
-        //Log.d(TAG, "clickButtonRegister: " + name + ", " + phone + ", " + password + ", " + passwordR + ", " + email + ", " + country + ".");
+        String occupation = editTextOccupation.getText().toString().trim();
+        //Log.d(TAG, "clickButtonRegister: " + name + ", " + phone + ", " + password + ", " + passwordR + ", " + email + ", " + country + ", " + occupation + ".");
 
         // If input is empty
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(password) || TextUtils.isEmpty(passwordR) || TextUtils.isEmpty(email) || TextUtils.isEmpty(country)) {
             Toast.makeText(this, "Please enter valid values!", Toast.LENGTH_LONG).show();
             return;
-            // TODO: Check if password is at least 6 characters long
         } else if (!password.equals(passwordR)) {
             Toast.makeText(this, "The passwords don't match!", Toast.LENGTH_LONG).show();
+            return;
+        } else if (password.length() < 6) {
+            Toast.makeText(this, "The password has to be at least 6 characters long!", Toast.LENGTH_LONG).show();
             return;
         } else {
             progressDialog.setMessage("Registering User...");
             progressDialog.show();
 
             // Create a user on the Firebase Auth and if successful saves to databse
-            createAuthUser(name, phone, password, email, country);
+            createAuthUser(name, phone, password, email, country, occupation);
         }
     }
 
     // Creates a new Auth user in the firebase
-    public void createAuthUser(final String name, final String phone, final String password, final String email, final String country) {
+    public void createAuthUser(final String name, final String phone, final String password, final String email, final String country, final String occupation) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -115,18 +115,18 @@ public class Register extends AppCompatActivity {
                             Log.d(TAG, "createUserWithEmail:success");
 
                             // Saves user to firebase
-                            saveUserToFirebase(name, phone, password, email, country);
+                            saveUserToFirebase(name, phone, password, email, country, occupation);
                         } else {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             progressDialog.cancel();
-                            Toast.makeText(Register.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(Register.this, "" + task.getException().getMessage(), Toast.LENGTH_LONG).show(); // TODO: Create this on all exceptions so the user knows. Maybe not on all, but on some others...
                         }
                     }
                 });
     }
 
     // Saves the user info onto the firebase database
-    public void saveUserToFirebase(final String name, final String phone, final String password, final String email, final String country) {
+    public void saveUserToFirebase(final String name, final String phone, final String password, final String email, final String country, final String occupation) {
         final String userId = firebaseAuth.getUid();
 
         // TODO: Add links to user
@@ -137,7 +137,8 @@ public class Register extends AppCompatActivity {
                 phone,
                 password,
                 email,
-                country
+                country,
+                occupation
         );
 
         // Save User to Firestore
@@ -170,18 +171,14 @@ public class Register extends AppCompatActivity {
     public void generateQrCode(User user) {
         Log.d(TAG, "generateQrCode: ");
 
-        // TODO: Quando um user atualizar a informacao dele no perfil, o qr code vai ter que atualizar tmb
-        // TODO: Preencher a restante informacao
+        // TODO: Quando um user atualizar a informacao dele no perfil, o qr code que ta na storage vai ter que atualizar tmb
         // Generates a new qr code
         QRGEncoder qrgEncoder = new QRGEncoder(
                 "MECARD:N:" + user.getName() + ";" +
-                "ORG:null;" +
-                "TITLE:null;" +
+                "ORG:" + user.getOccupation() + ";" +
                 "TEL:" + user.getPhone() + ";" +
-                "URL:null;" +
                 "EMAIL:" + user.getEmail() + ";" +
-                "ADR:" + user.getCountry() + ";" +
-                "NOTE:null;",
+                "ADR:" + user.getCountry() + ";",
                 null,
                 QRGContents.Type.TEXT,
                 810

@@ -1,20 +1,14 @@
 package com.sihbar.netz;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 public class Launch extends AppCompatActivity {
 
     // Variables
     private static final String TAG = "Launch";
-
-    // Firebase
-    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +19,6 @@ public class Launch extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        // TODO: Check if user is signed in
-        // FIXME: Crashes app and idk why
-        /*if (firebaseAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, Home.class));
-            Log.d(TAG, "boas");
-        }*/
     }
 
     // Start Register Activity

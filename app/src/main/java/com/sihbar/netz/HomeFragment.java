@@ -1,26 +1,15 @@
 package com.sihbar.netz;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CameraManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,14 +23,11 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
-import static android.content.Context.CAMERA_SERVICE;
 
 public class HomeFragment extends Fragment {
 
@@ -86,6 +72,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: btnChangeMode");
 
+                // TODO: Create a loading showing the user pressed the button
                 // TODO: Open an activity that shows the profile o another user! Not a fragment... Makes things easier.
                 // Launch profile fragment
                 Fragment displayQR= new DisplayQR();
@@ -105,18 +92,18 @@ public class HomeFragment extends Fragment {
         cameraKitView = view.findViewById(R.id.camera);
     }
 
-    // FIXME: Camera stops if you tab out of the app and then back in.
+    // FIXME: Camera stops if you tab out of the app and then back in. Minor bug though...
     @Override
     public void onStart() {
-        Log.d(TAG, "onStart: coco ");
+        Log.d(TAG, "onStart: ");
         super.onStart();
-        //cameraKitView.onStart();
+        cameraKitView.onStart();
     }
 
     @Override
     public void onStop() {
         Log.d(TAG, "onStop: ");
-        //cameraKitView.onStop();
+        cameraKitView.onStop();
         super.onStop();
     }
 
@@ -149,6 +136,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    // Get QR Results
     public void getQrResults(FirebaseVisionImage image) {
         Log.d(TAG, "getQrResults: ");
 

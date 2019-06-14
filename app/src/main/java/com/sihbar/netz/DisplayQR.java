@@ -25,6 +25,8 @@ public class DisplayQR extends Fragment {
     private static final String TAG = "DisplayQR";
     ImageView qrcode;
 
+    // TODO: Make button useful for smtgh
+    // TODO: Create a loading for the QR code until it appears
 
     @Nullable
     @Override
@@ -64,9 +66,9 @@ public class DisplayQR extends Fragment {
         Log.d(TAG, "showQR: " + qrReferece);
 
 
-// Download directly from StorageReference using Glide
-// (See MyAppGlideModule for Loader registration)
-        GlideApp.with( DisplayQR.this/* context */)
+        // Download directly from StorageReference using Glide
+        // (See MyAppGlideModule for Loader registration)
+        GlideApp.with(DisplayQR.this/* context */)
                 .load(qrCodesRef)
                 .into(qrcode);
 

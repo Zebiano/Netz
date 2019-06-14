@@ -2,15 +2,24 @@ package com.sihbar.netz;
 
 public class User {
 
-    private String userId, name, phone, password, email, country;
+    private String userId, name, phone, password, email, country, occupation;
 
-    public User(String userId, String name, String phone, String password, String email, String country) {
+    public User(String userId, String name, String phone, String password, String email, String country, String occupation) {
         this.userId = userId;
         this.name = name;
         this.phone = phone;
         this.password = password;
         this.email = email;
         this.country = country;
+        this.occupation = occupation;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
     }
 
     public String getUserId() {

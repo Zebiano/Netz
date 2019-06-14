@@ -14,15 +14,13 @@ import android.widget.TextView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
 
     // Variables
     private static final String TAG = "ProfileFragment";
-    DocumentSnapshot userDocument;
+    DocumentSnapshot userInfo;
 
     TextView textViewName;
     TextView textViewWork;
@@ -44,7 +42,7 @@ public class ProfileFragment extends Fragment {
 
         // Variables
         Home home = (Home)getActivity();
-        userDocument = home.userDocument;
+        userInfo = home.userInfo;
         textViewName = view.findViewById(R.id.textViewName);
         textViewWork = view.findViewById(R.id.textViewWork);
         textViewCountry = view.findViewById(R.id.textViewCountry);
@@ -59,10 +57,13 @@ public class ProfileFragment extends Fragment {
     // Loads user info
     public void loadUserInfo(View view) {
 
-        textViewName.setText(userDocument.getString("name"));
-        textViewWork.setText(userDocument.getString("occupation"));
-        textViewCountry.setText(userDocument.getString("country"));
-        textViewBio.setText(userDocument.getString("bio"));
+        Log.d(TAG, "loadUserInfo: " + userInfo.getData());
+
+        // Set user info on profile
+        textViewName.setText(userInfo.getString("name"));
+        textViewWork.setText(userInfo.getString("occupation"));
+        textViewCountry.setText(userInfo.getString("country"));
+        textViewBio.setText(userInfo.getString("bio"));
 
         // Loads arrays with user content
         laodArrays(view);
@@ -70,18 +71,13 @@ public class ProfileFragment extends Fragment {
 
     // Loads Arrays with data
     private void laodArrays(View view) {
-        Log.d(TAG, "laodArrays: " + userDocument.getData());
 
-        // Sets Links array
-        arrayLinks = (ArrayList<String>) userDocument.get("links");
-
-        // TODO: Check if userDocument.get(links) exists, else dont save it at all
-        // In case the array is empty/null
-        if (arrayLinks == null) {
+        // Checks for the links array in userDocument
+        if (userInfo.get("links") != null) {
+            // Sets Links array
+            arrayLinks = (ArrayList<String>) userInfo.get("links");
+        } else {
             Log.d(TAG, "laodArrays: Null arrayLinks");
-            arrayLinks.add("No links yet!");
-        } else if (arrayLinks.size() == 0) {
-            Log.d(TAG, "laodArrays: Empty arrayLinks");
             arrayLinks.add("No links yet!");
         }
 

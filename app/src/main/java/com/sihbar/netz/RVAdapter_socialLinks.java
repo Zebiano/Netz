@@ -20,8 +20,8 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     private static final String TAG = "RVAdapter_socialLinks";
 
     private Context context;
-    ArrayList<Integer> arrayLogos = new ArrayList<>();
-    private ArrayList<String> arrayLinks = new ArrayList<>();
+    ArrayList<Integer> arrayLogos;
+    private ArrayList<String> arrayLinks;
 
     public RVAdapter_socialLinks(Context context, ArrayList<Integer> arrayLogos, ArrayList<String> arrayLinks) {
         this.context = context;
