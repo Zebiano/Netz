@@ -56,12 +56,34 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    // Loads user info
+    public void loadUserInfo(View view) {
+
+        textViewName.setText(userDocument.getString("name"));
+        textViewWork.setText(userDocument.getString("occupation"));
+        textViewCountry.setText(userDocument.getString("country"));
+        textViewBio.setText(userDocument.getString("bio"));
+
+        // Loads arrays with user content
+        laodArrays(view);
+    }
+
     // Loads Arrays with data
     private void laodArrays(View view) {
         Log.d(TAG, "laodArrays: " + userDocument.getData());
 
         // Sets Links array
         arrayLinks = (ArrayList<String>) userDocument.get("links");
+
+        // TODO: Check if userDocument.get(links) exists, else dont save it at all
+        // In case the array is empty/null
+        if (arrayLinks == null) {
+            Log.d(TAG, "laodArrays: Null arrayLinks");
+            arrayLinks.add("No links yet!");
+        } else if (arrayLinks.size() == 0) {
+            Log.d(TAG, "laodArrays: Empty arrayLinks");
+            arrayLinks.add("No links yet!");
+        }
 
         // Sets logos arrays
         for (int i = 0; i < arrayLinks.size(); i++) {
@@ -111,17 +133,5 @@ public class ProfileFragment extends Fragment {
         RVAdapter_socialLinks adapter = new RVAdapter_socialLinks(getActivity(), arrayLogos, arrayLinks);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    // Loads user info
-    public void loadUserInfo(View view) {
-
-        textViewName.setText(userDocument.getString("name"));
-        textViewWork.setText(userDocument.getString("occupation"));
-        textViewCountry.setText(userDocument.getString("country"));
-        textViewBio.setText(userDocument.getString("bio"));
-
-        // Loads arrays with user content
-        laodArrays(view);
     }
 }
