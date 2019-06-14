@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.Custom"> <!-- Change this line to another style under /res/values/styles.xml to change the style -->
 
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
