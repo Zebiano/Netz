@@ -7,93 +7,153 @@
     tools:context=".Register">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginVertical="5dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="Name"
-            android:inputType="textPersonName"/>
+            android:layout_height="171dp"
+            android:layout_marginTop="30sp"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginVertical="5dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="Phone"
-            android:inputType="phone"/>
+            <LinearLayout
+                android:layout_width="79dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <EditText
-            android:gravity="left"
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginVertical="5dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword" />
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="goBack"
+                    android:text="Button" />
+            </LinearLayout>
 
-        <EditText
-            android:gravity="left"
-            android:id="@+id/editTextPasswordR"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginVertical="5dp"
-            android:ems="10"
-            android:hint="Repeat Password"
-            android:inputType="textPassword" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginVertical="5dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="Email"
-            android:inputType="textEmailAddress" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-        <EditText
-            android:id="@+id/editTextCountry"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginVertical="5dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="Country"/>
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/_roboto_bold"
+                    android:text="WELCOME TO NETZ"
+                    android:textColor="#000000"
+                    android:textSize="40sp" />
+            </LinearLayout>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextOccupation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginVertical="5dp"
-            android:ems="10"
-            android:gravity="left"
-            android:hint="What do you do/work?" />
 
-        <Button
-            android:id="@+id/buttonRegister"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
-            android:layout_marginHorizontal="55dp"
-            android:onClick="clickButtonRegister"
-            android:text="Register" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="23sp">
+
+            <EditText
+                android:id="@+id/editTextName"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Phone"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Password"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/editTextPasswordR"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Repeat Password"
+                android:inputType="textPassword" />
+
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/editTextCountry"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Country" />
+
+            <EditText
+                android:id="@+id/editTextOccupation"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="What do you do/work?" />
+
+            <Button
+                android:id="@+id/buttonRegister"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="20dp"
+                android:background="#773CD6"
+                android:onClick="clickButtonRegister"
+                android:text="Register"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

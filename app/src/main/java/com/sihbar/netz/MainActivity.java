@@ -29,9 +29,14 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    // Start Launch Activity
-    public void startLaunchActivity(View view) {
-        startActivity(new Intent(this, Launch.class));
+    // Start Logij Activity
+    public void startLoginActivity(View view) {
+        startActivity(new Intent(this, Login.class));
+    }
+
+    // Start Signup Activity
+    public void startSignupActivity(View view) {
+        startActivity(new Intent(this, Register.class));
     }
 
     // Starts home after attempting login

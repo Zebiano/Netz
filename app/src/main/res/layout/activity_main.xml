@@ -4,36 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonClickMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startLaunchActivity"
-        android:text="Click me to start"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="318dp"
+            android:layout_height="88dp"
+            android:layout_marginTop="250sp"
+            android:fontFamily="@font/_roboto_bold"
+            android:text="YOUR NETWORKING APP"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
 
-    <Button
-        android:id="@+id/btnHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginLeft="11dp"
-        android:onClick="startHome"
-        android:text="Open Home"
-        app:layout_constraintStart_toEndOf="@+id/buttonClickMe"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/buttonClickMe"
+            android:layout_width="319dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="30sp"
+            android:background="#FFFFFF"
+            android:fontFamily="@font/_roboto_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="startLoginActivity"
+            android:text="Login"
+            android:textColor="#773DC9"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnSignup"
+            android:layout_width="319dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/_roboto_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="startSignupActivity"
+            android:text="Sign Up"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnSignup2"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="30sp"
+            android:background="#00FFFFFF"
+            android:fontFamily="@font/_roboto_medium"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="startHome"
+            android:text="Cheat to Home"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

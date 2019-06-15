@@ -234,4 +234,9 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
+    public void goBack(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
 }
