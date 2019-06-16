@@ -19,17 +19,22 @@
 
         <Button
             android:id="@+id/btnTakePicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center|bottom"
-            android:text="Pic!" />
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/button_round_border" />
 
         <Button
             android:id="@+id/btnDisplayQR"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="end|top"
-            android:text="QR code" />
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="10sp"
+            android:background="@drawable/button_round"
+            android:drawableTop="@drawable/ic_qrcode_icon"
+            android:paddingTop="12sp" />
 
     </com.camerakit.CameraKitView>
 </android.support.constraint.ConstraintLayout>

@@ -11,15 +11,50 @@
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+            android:layout_width="38dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/ic_md_arrow_back" />
 
-        <ImageView
-            android:id="@+id/imgQRcode"
-            android:layout_width="wrap_content"
-            android:layout_height="139dp"
-            tools:srcCompat="@tools:sample/avatars" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:layout_marginBottom="10sp"
+            android:fontFamily="@font/_roboto_regular"
+            android:gravity="center_horizontal"
+            android:text="This is your QR code"
+            android:textColor="#773DC6"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:fontFamily="@font/_roboto_regular"
+            android:gravity="center_horizontal"
+            android:text="Scan it with another device to share your social media!"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="50sp"
+            android:background="@drawable/qrdisplay_border">
+
+            <ImageView
+                android:id="@+id/imgQRcode"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                tools:srcCompat="@tools:sample/avatars" />
+        </FrameLayout>
+
     </LinearLayout>
 
 </RelativeLayout>
