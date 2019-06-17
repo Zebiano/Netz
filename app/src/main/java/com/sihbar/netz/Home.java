@@ -22,7 +22,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
     private static final String TAG = "Home";
 
     // Variables
-    DocumentSnapshot userInfo;
+    static DocumentSnapshot userInfo;
 
     // Firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
