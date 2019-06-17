@@ -81,7 +81,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     if (task.getResult().isEmpty() == false) {
-                        Log.d(TAG, "DocumentSnapshot data: " + task.getResult().getDocuments().get(0).getData());
+                        Log.d(TAG, "DocumentSnapshot data: " + task.getResult().getDocuments().get(0));
 
                         // Sets userInfo
                         userInfo = task.getResult().getDocuments().get(0);

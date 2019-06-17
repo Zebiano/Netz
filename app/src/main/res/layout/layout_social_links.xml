@@ -21,19 +21,19 @@
         android:layout_marginHorizontal="20dp"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="Link" />
+        android:text="Link"/>
 
     <ImageButton
         android:id="@+id/imageButtonEdit"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_gravity="center"
         android:background="@drawable/ic__ionicons_svg_md_create" />
 
     <ImageButton
         android:id="@+id/imageButtonDelete"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_gravity="center"
         android:background="@drawable/ic__ionicons_svg_md_trash" />
 </LinearLayout>

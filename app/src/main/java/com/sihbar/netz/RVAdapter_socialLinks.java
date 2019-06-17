@@ -33,10 +33,10 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_social_links, viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_social_links, viewGroup, false);
+            ViewHolder holder = new ViewHolder(view);
 
-        return holder;
+            return holder;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.sihbar.netz;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -36,6 +37,8 @@ public class HomeFragment extends Fragment {
 
     // CameraKit
     private CameraKitView cameraKitView;
+
+    public static String qrCodeInfo;
 
     @Nullable
     @Override
@@ -170,13 +173,19 @@ public class HomeFragment extends Fragment {
                             Log.d(TAG, "onSuccess: " + valueType);
                             Log.d(TAG, "onSuccess: " + rawValue);
 
+                            // Sets value
+                            qrCodeInfo = rawValue;
+
                             // TODO: Open an activity that shows the profile o another user! Not a fragment... Makes things easier.
                             // Launch profile fragment
-                            Fragment profileFragment= new ProfileFragment();
+                            /*Fragment profileFragment= new ProfileFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();
                             transaction.replace(R.id.fragment_container, profileFragment);
                             transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                            transaction.commit();
+                            transaction.commit();*/
+
+                            // Launches new activity
+                            startActivity(new Intent(getActivity(), UserFound.class));
                         }
                     }
                 })
