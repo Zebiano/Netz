@@ -1,8 +1,8 @@
 package com.sihbar.netz;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -11,7 +11,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -19,13 +18,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class UserFound extends AppCompatActivity {
 
     // Variables
     private static final String TAG = "UserFound";
+
+    // TODO: Add loading screenssssss
 
     TextView textViewName;
     TextView textViewWork;
@@ -38,7 +36,6 @@ public class UserFound extends AppCompatActivity {
 
     // Firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,46 +93,14 @@ public class UserFound extends AppCompatActivity {
 
     // Adds found user to contacts
     public void addUser(View view) {
-        Log.d(TAG, "addUser: " + firebaseAuth.getCurrentUser().getUid());
+        Log.d(TAG, "addUser: " + Home.userInfo.getId());
 
-        // Searches for user to get document ID
-        Query updateUserContacts = firebaseFirestore.collection("users").whereEqualTo("userId", firebaseAuth.getCurrentUser().getUid());
-        updateUserContacts.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    if (task.getResult().isEmpty() == false) {
-                        Log.d(TAG, "DocumentSnapshot data: " + task.getResult().getDocuments().get(0));
+        // Sets userInfo
+        userInfo = Home.userInfo;
 
-                        // Sets userInfo
-                        userInfo = task.getResult().getDocuments().get(0);
-
-                        // Updates Document
-                        DocumentReference userRef= firebaseFirestore.collection("users").document(userInfo.getId());
-                        userRef.update("contacts", FieldValue.arrayUnion(foundUserInfo.getId()))
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "onSuccess: ");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d(TAG, "onFailure: " + e);
-                                    }
-                                });
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "onComplete: FAIL - " + task.getException());
-                }
-            }
-        });
-
-        DocumentReference userRef= firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid());
-        userRef.update("contacts", foundUserInfo.getId())
+        // Updates Document
+        DocumentReference userRef = firebaseFirestore.collection("users").document(userInfo.getId());
+        userRef.update("contacts", FieldValue.arrayUnion(foundUserInfo.getId()))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

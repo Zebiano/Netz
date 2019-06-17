@@ -12,19 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class ContactsFragment extends Fragment {
 
     // Variables
-    private static final String TAG = "EventsFragment";
-
+    private static final String TAG = "ContactsFragment";
     DocumentSnapshot userInfo;
 
     // Arrays
     private ArrayList<String> arrayNames = new ArrayList<>();
     ArrayList<Integer> arrayImages = new ArrayList<>();
+
+    // Firebase
+    FirebaseFirestore firebaseFirestore;
 
     @Nullable
     @Override
@@ -34,14 +37,33 @@ public class ContactsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewCreated: ");
+
         // Variables
         Home home = (Home)getActivity();
         userInfo = home.userInfo;
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
-        // Initialises the recycler view
-        initRecyclerView(view);
+        // Load Stuff
+        loadArrays(view);
 
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    // Load arrays
+    public void loadArrays(View view) {
+        Log.d(TAG, "loadArrays: " + userInfo.get("contacts"));
+        Object arrayContacts = userInfo.get("contacts");
+
+        // TODO: For do arrayContacts
+        /*for (int i = 0; i < arrayContacts.size(); i++) {
+
+        }*/
+
+        //Query getContact = firebaseFirestore.collection("users").document(userInfo.get("contacts"));
+
+        // Initialises the recycler view
+        //initRecyclerView(view);
     }
 
     // Initialize recyclerView
