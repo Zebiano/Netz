@@ -64,9 +64,9 @@ public class ContactsFragment extends Fragment {
     // Load arrays
     public void loadArrays(View view) {
         //Log.d(TAG, "loadArrays: " + userInfo.getData().get("contacts"));
+        // TODO: fazer so se o array existir
         final List<String> arrayContacts = (List<String>) userInfo.get("contacts");
 
-        // TODO: For do arrayContacts
         for (int i = 0; i < arrayContacts.size(); i++) {
             Log.d(TAG, "loadArrays: " + arrayContacts.get(i));
 
