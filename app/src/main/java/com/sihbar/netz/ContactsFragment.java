@@ -3,6 +3,7 @@ package com.sihbar.netz;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsFragment extends Fragment {
 
@@ -40,7 +47,7 @@ public class ContactsFragment extends Fragment {
         Log.d(TAG, "onViewCreated: ");
 
         // Variables
-        Home home = (Home)getActivity();
+        Home home = (Home) getActivity();
         userInfo = home.userInfo;
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -50,24 +57,52 @@ public class ContactsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    public void onClickTabContacts(View view) {
+
+    }
+
     // Load arrays
     public void loadArrays(View view) {
-        Log.d(TAG, "loadArrays: " + userInfo.get("contacts"));
-        Object arrayContacts = userInfo.get("contacts");
+        //Log.d(TAG, "loadArrays: " + userInfo.getData().get("contacts"));
+        final List<String> arrayContacts = (List<String>) userInfo.get("contacts");
 
         // TODO: For do arrayContacts
-        /*for (int i = 0; i < arrayContacts.size(); i++) {
+        for (int i = 0; i < arrayContacts.size(); i++) {
+            Log.d(TAG, "loadArrays: " + arrayContacts.get(i));
 
-        }*/
+            DocumentReference userRef = firebaseFirestore.collection("users").document(arrayContacts.get(i));
+            userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            //Log.d(TAG, "onComplete: " + document.get("contacts"));
+                            arrayNames.add(document.getString("name"));
+                            arrayImages.add(5);
+                            Log.d(TAG, "onComplete: " + arrayImages + ", " + arrayNames);
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
 
-        //Query getContact = firebaseFirestore.collection("users").document(userInfo.get("contacts"));
+            Log.d(TAG, "loadArrays: " + i + ", " + arrayContacts.size());
 
-        // Initialises the recycler view
-        //initRecyclerView(view);
+            // Checks if its the last loop
+            if (i + 1 == arrayContacts.size()) {
+                // Initialises the recycler view
+                //initRecyclerView(view);
+            }
+        }
     }
 
     // Initialize recyclerView
-    private void initRecyclerView (View view) {
+    private void initRecyclerView(View view) {
         Log.d(TAG, "initRecyclerView: ");
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);

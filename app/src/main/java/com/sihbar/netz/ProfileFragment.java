@@ -76,49 +76,49 @@ public class ProfileFragment extends Fragment {
         if (userInfo.get("links") != null) {
             // Sets Links array
             arrayLinks = (ArrayList<String>) userInfo.get("links");
+
+            // Sets logos arrays
+            for (int i = 0; i < arrayLinks.size(); i++) {
+                Log.d(TAG, "laodArrays: " + arrayLinks.get(i));
+                if (arrayLinks.get(i).contains("facebook")) {
+                    Log.d(TAG, "laodArrays: Facebook!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_facebook);
+                } else if (arrayLinks.get(i).contains("github")) {
+                    Log.d(TAG, "laodArrays: Github!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_github);
+                } else if (arrayLinks.get(i).contains("instagram")) {
+                    Log.d(TAG, "laodArrays: Instagram!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_instagram);
+                } else if (arrayLinks.get(i).contains("linkedin")) {
+                    Log.d(TAG, "laodArrays: LinkedIn!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_linkedin);
+                } else if (arrayLinks.get(i).contains("pinterest")) {
+                    Log.d(TAG, "laodArrays: Pinterest!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_pinterest);
+                } else if (arrayLinks.get(i).contains("slack")) {
+                    Log.d(TAG, "laodArrays: Slack!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_slack);
+                } else if (arrayLinks.get(i).contains("snapchat")) {
+                    Log.d(TAG, "laodArrays: Snapchat!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_snapchat);
+                } else if (arrayLinks.get(i).contains("twitter")) {
+                    Log.d(TAG, "laodArrays: Twitter!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_twitter);
+                } else if (arrayLinks.get(i).contains("youtube")) {
+                    Log.d(TAG, "laodArrays: Youtube!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_youtube);
+                } else {
+                    Log.d(TAG, "laodArrays: Not recognized: " + arrayLinks.get(i));
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_md_warning);
+                }
+            }
+
+            // Initialises the recycler view
+            initRecyclerView(view);
         } else {
             Log.d(TAG, "laodArrays: Null arrayLinks");
-            arrayLinks.add("No links yet!");
+            // TODO: HUGO - Este else acontece se nao haver links!
         }
-
-        // Sets logos arrays
-        for (int i = 0; i < arrayLinks.size(); i++) {
-            Log.d(TAG, "laodArrays: " + arrayLinks.get(i));
-            if (arrayLinks.get(i).contains("facebook")) {
-                Log.d(TAG, "laodArrays: Facebook!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_facebook);
-            } else if (arrayLinks.get(i).contains("github")) {
-                Log.d(TAG, "laodArrays: Github!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_github);
-            } else if (arrayLinks.get(i).contains("instagram")) {
-                Log.d(TAG, "laodArrays: Instagram!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_instagram);
-            } else if (arrayLinks.get(i).contains("linkedin")) {
-                Log.d(TAG, "laodArrays: LinkedIn!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_linkedin);
-            } else if (arrayLinks.get(i).contains("pinterest")) {
-                Log.d(TAG, "laodArrays: Pinterest!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_pinterest);
-            } else if (arrayLinks.get(i).contains("slack")) {
-                Log.d(TAG, "laodArrays: Slack!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_slack);
-            } else if (arrayLinks.get(i).contains("snapchat")) {
-                Log.d(TAG, "laodArrays: Snapchat!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_snapchat);
-            } else if (arrayLinks.get(i).contains("twitter")) {
-                Log.d(TAG, "laodArrays: Twitter!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_twitter);
-            } else if (arrayLinks.get(i).contains("youtube")) {
-                Log.d(TAG, "laodArrays: Youtube!");
-                arrayLogos.add(R.drawable.ic__ionicons_svg_logo_youtube);
-            } else {
-                Log.d(TAG, "laodArrays: Not recognized: " + arrayLinks.get(i));
-                arrayLogos.add(R.drawable.ic__ionicons_svg_md_warning);
-            }
-        }
-
-        // Initialises the recycler view
-        initRecyclerView(view);
     }
 
     // Initialize recyclerView

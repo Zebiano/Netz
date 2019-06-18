@@ -28,6 +28,8 @@ public class Login extends AppCompatActivity {
     // Firebase
     private FirebaseAuth firebaseAuth;
 
+    // TODO: Make the loading of the login longer
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
