@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="social_media_array">
+        <item>Facebook</item>
+        <item>Instagram</item>
+        <item>Twitter</item>
+        <item>Github</item>
+        <item>LinkedIn</item>
+        <item>Google+</item>
+        <item>IoSocial</item>
+        <item>Slack</item>
+        <item>Youtube</item>
+        <item>Snapchat</item>
+    </string-array>
+</resources>

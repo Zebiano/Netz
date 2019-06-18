@@ -149,6 +149,7 @@
                 android:layout_marginHorizontal="55dp"
                 android:layout_marginVertical="20dp"
                 android:background="#773CD6"
+                android:fontFamily="@font/_roboto_regular"
                 android:onClick="clickButtonRegister"
                 android:text="Register"
                 android:textColor="#FFFFFF" />

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="38dp"
+            android:layout_height="33dp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="30sp"
+            android:background="@drawable/ic_md_arrow_back" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50sp"
+            android:layout_marginBottom="10sp"
+            android:fontFamily="@font/_roboto_regular"
+            android:gravity="center_horizontal"
+            android:text="Add a new social media"
+            android:textColor="#773DC6"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50sp"
+            android:layout_marginRight="50sp"
+            android:fontFamily="@font/_roboto_regular"
+            android:gravity="center_horizontal"
+            android:text="Just insert the app and the handle!"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="40dp">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple" />
+
+            <EditText
+                android:id="@+id/txtHandle"
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="5dp"
+                android:backgroundTint="@android:color/holo_purple"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Your handle" />
+
+            <Button
+                android:id="@+id/btnConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginHorizontal="55dp"
+                android:layout_marginVertical="20dp"
+                android:background="#773CD6"
+                android:fontFamily="@font/_roboto_regular"
+                android:freezesText="false"
+                android:text="Confirm"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
