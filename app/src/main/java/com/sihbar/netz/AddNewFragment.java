@@ -50,6 +50,7 @@ public class AddNewFragment extends Fragment {
 
         // Button
         Button btnConfirm = view.findViewById(R.id.btnConfirm);
+        Button btnBack = view.findViewById(R.id.btnBack);
 
 
         //Spinner selection
@@ -79,6 +80,21 @@ public class AddNewFragment extends Fragment {
                 AddHandle();
             }
         });
+
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Launch profile fragment
+                Fragment ProfileFragment= new ProfileFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, ProfileFragment);
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+
 
         return view;
     }

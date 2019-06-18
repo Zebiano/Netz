@@ -36,6 +36,8 @@ public class DisplayQR extends Fragment {
         // Inflater/View
         View view = inflater.inflate(R.layout.fragment_displayqr, null);
 
+        Button btnBack = view.findViewById(R.id.btnBack);
+
         qrcode = view.findViewById(R.id.imgQRcode);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -46,6 +48,21 @@ public class DisplayQR extends Fragment {
         } else {
 
         }
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Launch profile fragment
+                Fragment HomeFragment = new HomeFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, HomeFragment);
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+            }
+        });
+
+
 
         return view;
     }

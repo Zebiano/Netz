@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnBack"
             android:layout_width="38dp"
             android:layout_height="33dp"
             android:layout_marginLeft="20sp"
