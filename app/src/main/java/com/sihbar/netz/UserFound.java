@@ -89,6 +89,8 @@ public class UserFound extends AppCompatActivity {
 
                         loadImage(profilPic, foundUserInfo.getString("userId"));
 
+                        // TODO: Add links to foudn user
+
                     } else {
                         Log.d(TAG, "No such document");
                     }
