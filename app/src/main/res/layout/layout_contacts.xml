@@ -5,6 +5,9 @@
     android:id="@+id/ParentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="5dp"
+    android:background="#ffffff"
     android:orientation="horizontal">
 
     <ImageView
@@ -23,21 +26,28 @@
         android:text="Name"/>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imageButtonEdit"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/ic__ionicons_svg_md_create" />
+
+    <ImageButton
+        android:id="@+id/imageButtonFavourite"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
         app:srcCompat="@drawable/ic_baseline_star_border_24px" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/imageButtonDelete"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
         app:srcCompat="@drawable/ic__ionicons_svg_md_trash" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/imageButtonClick"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"

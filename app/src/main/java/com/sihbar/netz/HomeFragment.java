@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
                 // Launch profile fragment
                 Fragment displayQR= new DisplayQR();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, displayQR);
+                transaction.replace(R.id.fragmentContainer, displayQR);
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
             }

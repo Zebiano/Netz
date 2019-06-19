@@ -83,7 +83,7 @@ public class AddNewFragment extends Fragment {
                 // Launch profile fragment
                 Fragment ProfileFragment= new ProfileFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, ProfileFragment);
+                transaction.replace(R.id.fragmentContainer, ProfileFragment);
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
             }

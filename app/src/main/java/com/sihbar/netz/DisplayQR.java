@@ -12,14 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class DisplayQR extends Fragment {
 
@@ -56,7 +52,7 @@ public class DisplayQR extends Fragment {
                 // Launch profile fragment
                 Fragment HomeFragment = new HomeFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, HomeFragment);
+                transaction.replace(R.id.fragmentContainer, HomeFragment);
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
             }

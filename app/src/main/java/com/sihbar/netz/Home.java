@@ -53,23 +53,23 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Fragment fragment = null;
 
-        switch (menuItem.getItemId()) {
-            case R.id.navigation_home:
-                fragment = new HomeFragment();
-                break;
-            case R.id.navigation_events:
-                fragment = new EventsFragment();
-                break;
-            case R.id.navigation_contacts:
-                fragment = new ContactsFragment();
-                break;
-            case R.id.navigation_profile:
-                if (userInfo != null) {
+        if (userInfo != null) {
+            switch (menuItem.getItemId()) {
+                case R.id.navigation_home:
+                    fragment = new HomeFragment();
+                    break;
+                case R.id.navigation_events:
+                    fragment = new EventsFragment();
+                    break;
+                case R.id.navigation_contacts:
+                    fragment = new ContactsFragment();
+                    break;
+                case R.id.navigation_profile:
                     fragment = new ProfileFragment();
-                } else {
-                    Toast.makeText(getApplicationContext(), "We're sorry, right now is not the time for that.", Toast.LENGTH_LONG).show();
-                }
-                break;
+                    break;
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "We're sorry, right now is not the time for that.", Toast.LENGTH_LONG).show();
         }
 
         return loadFragment(fragment);
@@ -123,7 +123,7 @@ public class Home extends AppCompatActivity implements BottomNavigationView.OnNa
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
             return true;
         }
         return false;

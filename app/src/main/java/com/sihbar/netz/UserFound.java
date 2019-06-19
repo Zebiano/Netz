@@ -106,6 +106,7 @@ public class UserFound extends AppCompatActivity {
     public void addUser(View view) {
         Log.d(TAG, "addUser: " + Home.userInfo.getId());
 
+        // TODO: Use Home.userifno and not set it to a new variable.
         // Sets userInfo
         userInfo = Home.userInfo;
 

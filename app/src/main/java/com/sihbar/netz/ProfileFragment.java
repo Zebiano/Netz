@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -34,6 +32,7 @@ public class ProfileFragment extends Fragment {
     TextView textViewCountry;
     TextView textViewBio;
     ImageView profilPic;
+
     // Arrays
     private ArrayList<String> arrayLinks = new ArrayList<>();
     ArrayList<Integer> arrayLogos = new ArrayList<>();
@@ -46,23 +45,19 @@ public class ProfileFragment extends Fragment {
 
         // Buttons
         Button btnAddLink = view.findViewById(R.id.btnAddLink);
-
-
         btnAddLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: btnChangeMode");
 
-
                 // Launch profile fragment
                 Fragment AddNewFragment = new AddNewFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container , AddNewFragment);
+                transaction.replace(R.id.fragmentContainer, AddNewFragment);
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
             }
         });
-
         return view;
     }
 
@@ -150,7 +145,7 @@ public class ProfileFragment extends Fragment {
             initRecyclerView(view);
         } else {
             Log.d(TAG, "laodArrays: Null arrayLinks");
-            // TODO: HUGO - Este else acontece se nao haver links!
+            // TODO: HUGO - Este else acontece se nao haver links! Temos que por o botao no meio depois ou algo do genero
         }
     }
 
