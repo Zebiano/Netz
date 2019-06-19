@@ -1,13 +1,10 @@
 package com.sihbar.netz;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,12 +13,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
 public class SaveNewLink extends AppCompatActivity {
 
     // Variables
     private static final String TAG = "SaveLink";
+
+    // TODO: Add a progressdialog
 
     DocumentSnapshot userInfo;
     DocumentSnapshot foundUserInfo;
@@ -51,13 +48,14 @@ public class SaveNewLink extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: ");
+                        Log.d(TAG, "onSuccess: Added new link!");
+                        // TODO: Redirect user to profile
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e);
+                        Log.d(TAG, "onFailure: Failed adding new link..." + e);
                     }
                 });
 

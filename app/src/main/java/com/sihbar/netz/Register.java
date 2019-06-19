@@ -245,7 +245,7 @@ public class Register extends AppCompatActivity {
         StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userId);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] data = baos.toByteArray();
 
         UploadTask uploadTask = profilePicRef.putBytes(data);
