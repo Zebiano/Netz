@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,13 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +24,8 @@ public class ContactsFragment extends Fragment {
     // Variables
     private static final String TAG = "ContactsFragment";
     DocumentSnapshot userInfo;
+    private SectionsPageAdapter sectionsPagerAdapter;
+    private ViewPager viewPager;
 
     // Arrays
     private ArrayList<String> arrayNames = new ArrayList<>();
@@ -46,19 +44,33 @@ public class ContactsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onViewCreated: ");
 
+        // Sets pageAdapter
+        sectionsPagerAdapter = new SectionsPageAdapter(getFragmentManager());
+
+        // Sets up viewPager
+        viewPager = (ViewPager) view.findViewById(R.id.container);
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+
         // Variables
         Home home = (Home) getActivity();
         userInfo = home.userInfo;
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         // Load Stuff
-        loadArrays(view);
+        //loadArrays(view);
 
         super.onViewCreated(view, savedInstanceState);
     }
 
-    public void onClickTabContacts(View view) {
-
+    private void setupViewPager(ViewPager viewPager) {
+        SectionsPageAdapter adapter = new SectionsPageAdapter(getFragmentManager());
+        adapter.addFragment(new TabContactsRecent(), "Recent");
+        adapter.addFragment(new TabContactsFavourites(), "Favourites");
+        adapter.addFragment(new TabContacts(), "Contacts");
+        viewPager.setAdapter(adapter);
     }
 
     // Load arrays
@@ -67,7 +79,7 @@ public class ContactsFragment extends Fragment {
         // TODO: fazer so se o array existir
         final List<String> arrayContacts = (List<String>) userInfo.get("contacts");
 
-        for (int i = 0; i < arrayContacts.size(); i++) {
+        /*for (int i = 0; i < arrayContacts.size(); i++) {
             Log.d(TAG, "loadArrays: " + arrayContacts.get(i));
 
             DocumentReference userRef = firebaseFirestore.collection("users").document(arrayContacts.get(i));
@@ -98,7 +110,7 @@ public class ContactsFragment extends Fragment {
                 // Initialises the recycler view
                 //initRecyclerView(view);
             }
-        }
+        }*/
     }
 
     // Initialize recyclerView
