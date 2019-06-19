@@ -57,41 +57,20 @@ public class ContactsFragment extends Fragment {
 
     // Load arrays
     public void loadArrays(View view) {
-        //Log.d(TAG, "loadArrays: " + userInfo.getData().get("contacts"));
-
-        /*DocumentReference userRef = firebaseFirestore.collection("users").document("8gHOoKTRd2S9ytnenPqq");
-        userRef.get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        Log.d(TAG, "onComplete: ");
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                                //Log.d(TAG, "onComplete: " + document.get("contacts"));
-                                arrayNames.add(document.getString("name"));
-                                arrayImages.add(5);
-                                Log.d(TAG, "onComplete: " + arrayImages + ", " + arrayNames);
-                            } else {
-                                Log.d(TAG, "No such document");
-                            }
-                        } else {
-                            Log.d(TAG, "get failed with ", task.getException());
-                        }
-                    }
-                });*/
-
-        Log.d(TAG, "onViewCreated: " + Home.userInfo.get("contacts"));
+        Log.d(TAG, "loadArrays: " + Home.userInfo.get("contacts"));
 
         // TODO: fazer so se o array existir
         arrayContacts = (List<String>) Home.userInfo.get("contacts");
 
-        for (int i = 0; i < arrayContacts.size(); i++) {
-            //Log.d(TAG, "loadArrays: " + arrayContacts.get(i));
+        if (arrayContacts != null) {
+            for (int i = 0; i < arrayContacts.size(); i++) {
+                //Log.d(TAG, "loadArrays: " + arrayContacts.get(i));
 
-            // Gets contacts 
-            getContacts(arrayContacts.get(i), i, view);
+                // Gets contacts
+                getContacts(arrayContacts.get(i), i, view);
+            }
+        } else {
+            // TODO: Caso o utilziador nao tenha contactos
         }
     }
 

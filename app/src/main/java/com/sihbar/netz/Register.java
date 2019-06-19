@@ -150,10 +150,8 @@ public class Register extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "onSuccess: Save user to firestore");
 
-                        // Generate a qr code for this user and save it onto the frbase storage
+                        // Generate a qr code for this user and save it onto the firebase storage
                         generateQrCode(user);
-
-                        saveProfile(user.getUserId());
 
                         progressDialog.cancel();
                         Toast.makeText(Register.this, "Successfully registered User!", Toast.LENGTH_SHORT).show();
@@ -199,6 +197,7 @@ public class Register extends AppCompatActivity {
                 );
                 String result = save ? "Image Saved" : "Image Not Saved";
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                Log.d(TAG, "generateQrCode: " + result);
 
                 // Saves qr code onto firebase storage
                 saveQrCode(user.getUserId());
@@ -211,7 +210,8 @@ public class Register extends AppCompatActivity {
     }
 
     // Saves QR Code onto the firebase storage
-    public void saveQrCode(String userId) {
+    public void saveQrCode(final String userId) {
+        Log.d(TAG, "saveQrCode: ");
         StorageReference qrCodesRef = firebaseStorage.getReference().child("qrcodes/" + userId);
         final File qrcode = new File(this.getCacheDir() + "/qrcode.jpg");
         final Uri uri = Uri.fromFile(qrcode);
@@ -221,26 +221,27 @@ public class Register extends AppCompatActivity {
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d(TAG, "onSuccess: " + taskSnapshot);
+                Log.d(TAG, "onSuccess: QrCode Saved to storage! " + taskSnapshot);
 
                 // Delete cache with qr code
                 qrcode.delete();
 
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
+                // Saves Profile Picture for the user (has to be in callback, else itll never save)
+                saveProfile(userId);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
                 // TODO: In case qr code generation fails, say the registration failed. De certa forma tamos em callback hell porcausa do try catch...
-                Log.d(TAG, "onFailure: Fuck");
+                Log.d(TAG, "onFailure: Fuck. Rip QR code saving in storage.");
             }
         });
     }
 
+    // Saves the profile picture of the user
     public void saveProfile(String userId){
-        Bitmap bitmap = BitmapFactory.decodeResource( getResources(), R.drawable.profilepic);
+        Bitmap bitmap = BitmapFactory.decodeResource( getResources(), R.drawable.logo);
         StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userId);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -252,18 +253,19 @@ public class Register extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
+                Log.w(TAG, "onFailure: Rip saving picture to storage", exception);
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
+                Log.d(TAG, "onSuccess: Save Pic to storage!");
             }
         });
 
     }
+
     public void goBack(View view) {
         startActivity(new Intent(this, MainActivity.class));
     }
-
 }

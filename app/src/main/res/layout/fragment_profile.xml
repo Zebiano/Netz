@@ -91,7 +91,7 @@
             android:layout_marginRight="50dp"
             android:background="#773DC6"
             android:fontFamily="@font/_roboto_regular"
-            android:text="Add new"
+            android:text="Add Link"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
