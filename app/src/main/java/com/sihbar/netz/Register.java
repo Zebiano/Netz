@@ -3,6 +3,7 @@ package com.sihbar.netz;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.zxing.WriterException;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -151,6 +153,8 @@ public class Register extends AppCompatActivity {
                         // Generate a qr code for this user and save it onto the frbase storage
                         generateQrCode(user);
 
+                        saveProfile(user.getUserId());
+
                         progressDialog.cancel();
                         Toast.makeText(Register.this, "Successfully registered User!", Toast.LENGTH_SHORT).show();
 
@@ -235,6 +239,29 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    public void saveProfile(String userId){
+        Bitmap bitmap = BitmapFactory.decodeResource( getResources(), R.drawable.profilepic);
+        StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userId);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = profilePicRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+
+    }
     public void goBack(View view) {
         startActivity(new Intent(this, MainActivity.class));
     }

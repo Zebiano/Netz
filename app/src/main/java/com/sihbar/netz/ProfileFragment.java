@@ -12,9 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -28,7 +33,7 @@ public class ProfileFragment extends Fragment {
     TextView textViewWork;
     TextView textViewCountry;
     TextView textViewBio;
-
+    ImageView profilPic;
     // Arrays
     private ArrayList<String> arrayLinks = new ArrayList<>();
     ArrayList<Integer> arrayLogos = new ArrayList<>();
@@ -41,6 +46,7 @@ public class ProfileFragment extends Fragment {
 
         // Buttons
         Button btnAddLink = view.findViewById(R.id.btnAddLink);
+
 
         btnAddLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +76,7 @@ public class ProfileFragment extends Fragment {
         textViewWork = view.findViewById(R.id.textViewWork);
         textViewCountry = view.findViewById(R.id.textViewCountry);
         textViewBio = view.findViewById(R.id.textViewBio);
+        profilPic = view.findViewById(R.id.imageViewPicture);
 
         // Load user info
         loadUserInfo(view);
@@ -90,6 +97,9 @@ public class ProfileFragment extends Fragment {
 
         // Loads arrays with user content
         laodArrays(view);
+
+        loadImage(profilPic, userInfo.getString("userId") );
+
     }
 
     // Loads Arrays with data
@@ -152,5 +162,26 @@ public class ProfileFragment extends Fragment {
         RVAdapter_socialLinks adapter = new RVAdapter_socialLinks(getActivity(), arrayLogos, arrayLinks);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    public void loadImage(ImageView pic, String userID) {
+
+        Log.d(TAG, "ID: " + userID);
+
+        // Reference to an image file in Cloud Storage
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profilePicRef = storageReference.child("profilepic/" + userID);
+
+        StorageReference imageRef = storageReference.child("profilepic/" + userID + ".jpeg");
+
+        Log.d(TAG, "setImage: " + imageRef);
+
+
+        // Download directly from StorageReference using Glide
+        // (See MyAppGlideModule for Loader registration)
+        GlideApp.with(ProfileFragment.this)
+                .load(profilePicRef)
+                .into(pic);
+
     }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,6 +18,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class UserFound extends AppCompatActivity {
 
@@ -29,6 +32,7 @@ public class UserFound extends AppCompatActivity {
     TextView textViewWork;
     TextView textViewCountry;
     TextView textViewBio;
+    ImageView profilPic;
 
     String qrCodeInfo;
     DocumentSnapshot userInfo;
@@ -47,6 +51,7 @@ public class UserFound extends AppCompatActivity {
         textViewWork = findViewById(R.id.textViewWork);
         textViewCountry = findViewById(R.id.textViewCountry);
         textViewBio = findViewById(R.id.textViewBio);
+        profilPic = findViewById(R.id.imageViewPicture);
 
         loadUserInfo();
     }
@@ -81,6 +86,9 @@ public class UserFound extends AppCompatActivity {
                         textViewWork.setText(foundUserInfo.getString("occupation"));
                         textViewCountry.setText(foundUserInfo.getString("country"));
                         textViewBio.setText(foundUserInfo.getString("bio"));
+
+                        loadImage(profilPic, foundUserInfo.getString("userId"));
+
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -89,6 +97,9 @@ public class UserFound extends AppCompatActivity {
                 }
             }
         });
+
+
+
     }
 
     // Adds found user to contacts
@@ -113,5 +124,28 @@ public class UserFound extends AppCompatActivity {
                         Log.d(TAG, "onFailure: " + e);
                     }
                 });
+    }
+
+    public void loadImage(ImageView pic, String userId) {
+
+        // Variables
+
+        userInfo = Home.userInfo;
+        //String userID = userInfo.getString("userId");
+        Log.d(TAG, "ID: " + userId);
+
+        // Reference to an image file in Cloud Storage
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profilePicRef = storageReference.child("profilepic/" + userId);
+
+        Log.d(TAG, "setImage: " + profilePicRef);
+
+
+        // Download directly from StorageReference using Glide
+        // (See MyAppGlideModule for Loader registration)
+        GlideApp.with(UserFound.this)
+                .load(profilePicRef)
+                .into(pic);
+
     }
 }
