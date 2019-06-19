@@ -7,11 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -22,6 +26,10 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     private Context context;
     ArrayList<Integer> arrayLogos;
     private ArrayList<String> arrayLinks;
+
+    DocumentSnapshot userInfo;
+
+    Button btnDelete;
 
     public RVAdapter_socialLinks(Context context, ArrayList<Integer> arrayLogos, ArrayList<String> arrayLinks) {
         this.context = context;
@@ -35,6 +43,17 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
 
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_social_links, viewGroup, false);
             ViewHolder holder = new ViewHolder(view);
+
+            btnDelete = viewGroup.findViewById(R.id.btnDelete);
+
+        btnDelete = viewGroup.findViewById(R.id.btnDelete);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               deleteLink();
+            }
+        });
 
             return holder;
     }
@@ -74,5 +93,16 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
             link = itemView.findViewById(R.id.textViewLink);
             parentLayout = itemView.findViewById(R.id.ParentLayout);
         }
+    }
+
+    public void deleteLink(){
+        Log.d(TAG, "Entrei no delete " );
+
+        // TODO: Depois de saber quem ta logado acho que ta pronto
+       // userInfo = Home.userInfo;
+
+        //Log.d(TAG, "deleteLink: " + userInfo.getId());
+     //   FirebaseFirestore.getInstance().collection("users").document(userInfo.getId()).update("links", FieldValue.arrayRemove("facebook.com/"));
+
     }
 }

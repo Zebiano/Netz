@@ -241,7 +241,7 @@ public class Register extends AppCompatActivity {
 
     // Saves the profile picture of the user
     public void saveProfile(String userId){
-        Bitmap bitmap = BitmapFactory.decodeResource( getResources(), R.drawable.logo);
+        Bitmap bitmap = BitmapFactory.decodeResource( getResources(), R.drawable.placeholder);
         StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userId);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

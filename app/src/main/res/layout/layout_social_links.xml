@@ -31,7 +31,7 @@
         android:background="@drawable/ic__ionicons_svg_md_create" />
 
     <ImageButton
-        android:id="@+id/imageButtonDelete"
+        android:id="@+id/btnDelete"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="center"
