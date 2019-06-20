@@ -104,12 +104,6 @@ public class AddNewFragment extends Fragment {
     }
 
     public void AddHandle() {
-
-        /*Intent intent = new Intent(getActivity(), SaveNewLink.class);
-        intent.putExtra("app", link);
-        intent.putExtra("handle", handle);
-        startActivity(intent);*/
-
         handle = txtHandle.getText().toString();
         String myLink = link + ".com/" + handle;
 

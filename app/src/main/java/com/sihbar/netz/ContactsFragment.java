@@ -66,7 +66,7 @@ public class ContactsFragment extends Fragment {
                 getContacts(arrayContacts.get(i), i, view);
             }
         } else {
-            Toast.makeText(getActivity(), "You have no Contacts! Consider adding someone :)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "You have no Contacts! Consider adding some :)", Toast.LENGTH_SHORT).show();
         }
     }
 
