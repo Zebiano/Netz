@@ -34,8 +34,6 @@ public class ContactsFragment extends Fragment {
     // Firebase
     FirebaseFirestore firebaseFirestore;
 
-    // TODO: A layout file dos contactos ta deio como o crl os icons
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,9 +57,7 @@ public class ContactsFragment extends Fragment {
     public void loadArrays(View view) {
         Log.d(TAG, "loadArrays: " + Home.userInfo.get("contacts"));
 
-        // TODO: fazer so se o array existir
         arrayContacts = (List<String>) Home.userInfo.get("contacts");
-
         if (arrayContacts != null) {
             for (int i = 0; i < arrayContacts.size(); i++) {
                 //Log.d(TAG, "loadArrays: " + arrayContacts.get(i));
@@ -70,10 +66,11 @@ public class ContactsFragment extends Fragment {
                 getContacts(arrayContacts.get(i), i, view);
             }
         } else {
-            // TODO: Caso o utilziador nao tenha contactos
+            // TODO: Caso o utilizador nao tenha contactos
         }
     }
 
+    // Gets contacts
     public void getContacts(String document, final int i, final View view) {
         Log.d(TAG, "getContacts: " + document);
         DocumentReference userRef = firebaseFirestore.collection("users").document(document);

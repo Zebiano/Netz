@@ -35,6 +35,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/ic_baseline_star_border_24px" />
 
     <ImageButton
@@ -42,6 +43,7 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/ic__ionicons_svg_md_trash" />
 
     <ImageButton
@@ -49,5 +51,6 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
         app:srcCompat="@drawable/ic_md_arrow" />
 </LinearLayout>
