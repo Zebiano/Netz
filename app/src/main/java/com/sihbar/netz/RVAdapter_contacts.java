@@ -1,8 +1,10 @@
 package com.sihbar.netz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +25,13 @@ public class RVAdapter_contacts extends RecyclerView.Adapter<RVAdapter_contacts.
     private Context context;
     ArrayList<StorageReference> arrayImages;
     private ArrayList<String> arrayNames;
+    ArrayList<String> arrayUserId;
 
-    public RVAdapter_contacts(Context context, ArrayList<StorageReference> arrayImages, ArrayList<String> arrayNames) {
+    public RVAdapter_contacts(Context context, ArrayList<StorageReference> arrayImages, ArrayList<String> arrayNames, ArrayList<String> arrayUserId) {
         this.context = context;
         this.arrayImages = arrayImages;
         this.arrayNames = arrayNames;
+        this.arrayUserId = arrayUserId;
     }
 
     @NonNull
@@ -40,7 +44,7 @@ public class RVAdapter_contacts extends RecyclerView.Adapter<RVAdapter_contacts.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         //Log.d(TAG, "onBindViewHolder: " + arrayLinks.get(i));
         //Log.d(TAG, "onBindViewHolder: " + arrayLogos.get(i));
 
@@ -51,6 +55,15 @@ public class RVAdapter_contacts extends RecyclerView.Adapter<RVAdapter_contacts.
 
         // Set link text
         viewHolder.name.setText(arrayNames.get(i));
+
+        // Opens Contact Profile
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: Clicked Contact!");
+                openContact(arrayUserId.get(i));
+            }
+        });
     }
 
     @Override
@@ -72,5 +85,13 @@ public class RVAdapter_contacts extends RecyclerView.Adapter<RVAdapter_contacts.
             name = itemView.findViewById(R.id.textViewName);
             parentLayout = itemView.findViewById(R.id.ParentLayout);
         }
+    }
+
+    // Opens the contacts profile
+    public void openContact(final String userId) {
+        Log.d(TAG, "openContact: " + userId);
+
+        // Redirect to User Profile
+        context.startActivity(new Intent(context, UserProfile.class).putExtra("userId", userId));
     }
 }

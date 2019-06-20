@@ -1,44 +1,36 @@
 package com.sihbar.netz;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class UserFound extends AppCompatActivity {
+public class UserProfile extends AppCompatActivity {
 
     // Variables
-    private static final String TAG = "UserFound";
+    private static final String TAG = "UserProfile";
 
     TextView textViewName;
     TextView textViewWork;
     TextView textViewCountry;
     TextView textViewBio;
     ImageView profilPic;
+    String userId;
 
-    String qrCodeInfo;
     DocumentSnapshot foundUserInfo;
 
     // Arrays
@@ -51,7 +43,7 @@ public class UserFound extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_found);
+        setContentView(R.layout.activity_user_profile);
 
         // Variables
         textViewName = findViewById(R.id.textViewName);
@@ -59,34 +51,27 @@ public class UserFound extends AppCompatActivity {
         textViewCountry = findViewById(R.id.textViewCountry);
         textViewBio = findViewById(R.id.textViewBio);
         profilPic = findViewById(R.id.imageViewPicture);
+        userId = getIntent().getStringExtra("userId");
 
+        // Loads User info
         loadUserInfo();
     }
 
     // Loads info to activity
     public void loadUserInfo() {
-        Log.d(TAG, "loadUserInfo: ");
+        Log.d(TAG, "loadUserInfo: "+ userId);
 
-        // Get QR code info
-        qrCodeInfo = HomeFragment.qrCodeInfo;
-        int qrEmailIndexBeg = qrCodeInfo.indexOf("EMAIL:") + 6;
-        int qrEmailIndexFin = qrCodeInfo.substring(qrEmailIndexBeg).indexOf(";") + qrEmailIndexBeg;
-        String qrEmail = qrCodeInfo.substring(qrEmailIndexBeg, qrEmailIndexFin);
-        Log.d(TAG, "loadUserInfo: Beg: " + qrEmailIndexBeg);
-        Log.d(TAG, "loadUserInfo: Fin: " + qrEmailIndexFin);
-        Log.d(TAG, "loadUserInfo: Res: " + qrCodeInfo.substring(qrEmailIndexBeg, qrEmailIndexFin));
-
-        // Creates a query and then gets it
-        Query getByEmail = firebaseFirestore.collection("users").whereEqualTo("email", qrEmail);
-        getByEmail.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        DocumentReference docRef = firebaseFirestore.collection("users").document(userId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    if (task.getResult().isEmpty() == false) {
-                        Log.d(TAG, "DocumentSnapshot data: " + task.getResult().getDocuments().get(0));
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
 
                         // Sets userInfos
-                        foundUserInfo = task.getResult().getDocuments().get(0);
+                        foundUserInfo = document;
 
                         // Sets info on view
                         textViewName.setText(foundUserInfo.getString("name"));
@@ -100,37 +85,10 @@ public class UserFound extends AppCompatActivity {
                         Log.d(TAG, "No such document");
                     }
                 } else {
-                    Log.d(TAG, "onComplete: FAIL - " + task.getException());
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
-    }
-
-    // Adds found user to contacts
-    public void addUser(View view) {
-        Log.d(TAG, "addUser: " + Home.userInfo.getId());
-
-        // Updates Document
-        DocumentReference userRef = firebaseFirestore.collection("users").document(Home.userInfo.getId());
-        userRef.update("contacts", FieldValue.arrayUnion(foundUserInfo.getId()))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "onSuccess: ");
-
-                        Toast.makeText(UserFound.this, "Successfully added user!", Toast.LENGTH_SHORT).show();
-
-                        // Redirect to Home
-                        startActivity(new Intent(UserFound.this, Home.class));
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: " + e);
-                        Toast.makeText(UserFound.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 
     // Loads Arrays with data
@@ -212,7 +170,7 @@ public class UserFound extends AppCompatActivity {
 
         // Download directly from StorageReference using Glide
         // (See MyAppGlideModule for Loader registration)
-        GlideApp.with(UserFound.this)
+        GlideApp.with(UserProfile.this)
                 .load(profilePicRef)
                 .into(pic);
 

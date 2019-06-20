@@ -32,6 +32,7 @@ public class ContactsFragment extends Fragment {
     private ArrayList<String> arrayNames = new ArrayList<>();
     ArrayList<StorageReference> arrayImages = new ArrayList<>();
     List<String> arrayContacts;
+    ArrayList<String> arrayUserIds = new ArrayList<>();
 
     // Firebase
     FirebaseFirestore firebaseFirestore;
@@ -93,6 +94,9 @@ public class ContactsFragment extends Fragment {
                                 StorageReference profilePicRef = storageReference.child("profilepic/" + document.get("userId").toString());
                                 arrayImages.add(profilePicRef);
 
+                                // Add UserId
+                                arrayUserIds.add(document.getId());
+
                                 // Checks if its the last loop
                                 if (i + 1 == arrayContacts.size()) {
                                     // Initialises the recycler view
@@ -114,7 +118,7 @@ public class ContactsFragment extends Fragment {
         Log.d(TAG, "initRecyclerView - Images: " + arrayImages + ", Names: " + arrayNames);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-        RVAdapter_contacts adapter = new RVAdapter_contacts(getActivity(), arrayImages, arrayNames);
+        RVAdapter_contacts adapter = new RVAdapter_contacts(getActivity(), arrayImages, arrayNames, arrayUserIds);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

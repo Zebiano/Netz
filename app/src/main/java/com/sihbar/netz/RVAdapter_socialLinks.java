@@ -69,12 +69,12 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         // Set link text
         viewHolder.link.setText(arrayLinks.get(i));
 
-        // Deletes link
-        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+        // Opens link on browser
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: Clicked delete link!");
-                deleteLink(arrayLinks.get(i));
+                Log.d(TAG, "onClick: Clicked link!");
+                openLink(arrayLinks.get(i));
             }
         });
 
@@ -87,12 +87,12 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
             }
         });
 
-        // opens link on browser
-        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+        // Deletes link
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: Clicked link!");
-                openLink(arrayLinks.get(i));
+                Log.d(TAG, "onClick: Clicked delete link!");
+                deleteLink(arrayLinks.get(i));
             }
         });
     }
