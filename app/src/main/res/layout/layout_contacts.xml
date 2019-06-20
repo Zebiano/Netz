@@ -7,30 +7,28 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
     android:layout_marginVertical="5dp"
-    android:background="#ffffff"
-    android:orientation="horizontal">
+    android:background="#F1F1F1"
+    android:orientation="horizontal"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="15dp">
 
     <ImageView
         android:id="@+id/imageViewImage"
-        tools:srcCompat="@tools:sample/avatars"
         android:layout_width="40dp"
-        android:layout_height="40dp"/>
+        android:layout_height="40dp"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
         android:layout_gravity="top"
+        android:layout_marginHorizontal="20dp"
         android:layout_weight="1"
-        android:text="Name"/>
-
-    <ImageButton
-        android:id="@+id/imageButtonEdit"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/ic__ionicons_svg_md_create" />
+        android:gravity="center_vertical"
+        android:text="Name" />
 
     <ImageButton
         android:id="@+id/imageButtonFavourite"

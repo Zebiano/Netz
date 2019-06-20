@@ -10,7 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="15dp"
-        android:orientation="vertical">
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,14 +28,26 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/_roboto_regular"
+                android:gravity="center_horizontal"
+                android:text="Oh wait!"
+                android:textColor="#773CD6"
+                android:textSize="30dp" />
+
+            <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="It seems like it's your first time here..."
                 android:fontFamily="@font/_roboto_regular"
-                android:textSize="20dp"/>
+                android:text="It seems like it's your first time here..."
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -35,36 +55,32 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:text="Let people know who you are!"
                 android:fontFamily="@font/_roboto_regular"
-                android:textSize="20dp"/>
+                android:text="Let people know who you are!"
+                android:textSize="20dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/button_round"
+                android:drawableTop="@drawable/ic__ionicons_svg_md_camera"
+                android:onClick="addPicture"
+                android:padding="12dp"
+                android:scaleType="fitCenter"
+                android:tint="#FFFFFF"
+                app:srcCompat="@drawable/ic__ionicons_svg_md_camera" />
 
-                <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:onClick="addPicture"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic__ionicons_svg_md_camera" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_gravity="center"
-                    tools:srcCompat="@drawable/ic__ionicons_svg_md_person" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="8dp"
+                tools:srcCompat="@drawable/placeholder" />
 
         </LinearLayout>
 
@@ -72,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,9 +102,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginVertical="10dp"
-                android:text="And since you're here, might as well write a little something about yourself for others to see:"
                 android:fontFamily="@font/_roboto_regular"
-                android:textSize="20dp"/>
+                android:gravity="center_horizontal"
+                android:text="And since you're here, might as well write a little something about yourself for others to see:"
+                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editTextBio"
@@ -96,20 +113,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
                 android:ems="10"
+                android:fontFamily="@font/_roboto_regular"
                 android:gravity="start|top"
                 android:hint="A small description of yourself"
                 android:inputType="textMultiLine"
-                android:fontFamily="@font/_roboto_regular"
-                android:textSize="20dp"/>
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:textSize="20dp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_height="36dp"
+            android:layout_marginHorizontal="55dp"
+            android:layout_marginVertical="10dp"
             android:onClick="saveInfo"
-            android:text="let's start!" />
+            android:text="let's start!"
+            android:fontFamily="@font/_roboto_regular"
+            android:background="#773CD6"
+            android:textColor="#FFFFFF" />
+
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
