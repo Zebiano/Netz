@@ -1,15 +1,18 @@
 package com.sihbar.netz;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,9 +67,17 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: Clicked!");
+                Log.d(TAG, "onClick: Clicked delete link!");
                 deleteLink(arrayLinks.get(i));
-            } 
+            }
+        });
+
+        viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: Clicked edit link!");
+                showDialog();
+            }
         });
     }
 
@@ -82,6 +93,7 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         TextView link;
         LinearLayout parentLayout;
         ImageButton btnDelete;
+        ImageButton btnEdit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +101,7 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
             link = itemView.findViewById(R.id.textViewLink);
             parentLayout = itemView.findViewById(R.id.ParentLayout);
             btnDelete = itemView.findViewById(R.id.btnDelete);
+            btnEdit = itemView.findViewById(R.id.btnEdit);
         }
     }
 
@@ -104,11 +117,9 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
                         Toast.makeText(context, "Link removed!", Toast.LENGTH_SHORT).show();
                         // TODO: Atualizar a pagina/recyclerView quando se apaga um link. Mudar de actiovity resolve o prblema, mas e chato, Devia atualziar sozinho.
 
-                        AppCompatActivity activity = (AppCompatActivity)context;
+                        AppCompatActivity activity = (AppCompatActivity) context;
                         Fragment myFragment = new ProfileFragment();
                         activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, myFragment).addToBackStack(null).commit();
-
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -119,5 +130,33 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
                 });
 
 
+    }
+
+    // Shows Dialog
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Title");
+
+        // Set up the input
+        final EditText input = new EditText(context);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //m_Text = input.getText().toString();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }

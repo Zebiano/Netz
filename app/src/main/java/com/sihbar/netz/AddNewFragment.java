@@ -1,11 +1,11 @@
 package com.sihbar.netz;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,16 +16,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import static android.app.Activity.RESULT_OK;
-import static android.support.constraint.Constraints.TAG;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddNewFragment extends Fragment {
+
+    // Variables
+    private static final String TAG = "AddNewFragment";
 
     EditText txtHandle;
     String link;
     String handle;
 
-    static final int PICK_CONTACT_REQUEST = 1;
+    // Firebase
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     // FIXME: Quando se abre "your handle" para escrever, o teclado vaio pra cima e leva tmb a barra do menu de baixo xD
 
@@ -63,20 +70,19 @@ public class AddNewFragment extends Fragment {
                                        int position, long id) {
                 link = spinner.getSelectedItem().toString();
                 link = link.toLowerCase();
-
+                Log.d(TAG, "onItemSelected: Link: " + link);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-            //NAO APAGAR
-            //If este método for apagado = crash
+                //NAO APAGAR
+                //If este método for apagado = crash
             }
         });
 
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 AddHandle();
             }
         });
@@ -85,9 +91,8 @@ public class AddNewFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // Launch profile fragment
-                Fragment ProfileFragment= new ProfileFragment();
+                Fragment ProfileFragment = new ProfileFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragmentContainer, ProfileFragment);
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
@@ -95,27 +100,39 @@ public class AddNewFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
-    public void AddHandle(){
+    public void AddHandle() {
 
-        handle = txtHandle.getText().toString();
-        Intent intent = new Intent(getActivity(), SaveNewLink.class);
+        /*Intent intent = new Intent(getActivity(), SaveNewLink.class);
         intent.putExtra("app", link);
         intent.putExtra("handle", handle);
-        startActivityForResult(intent,111);
+        startActivity(intent);*/
+
+        handle = txtHandle.getText().toString();
+        String myLink = link + ".com/" + handle;
+
+        // Updates Document
+        DocumentReference userRef = firebaseFirestore.collection("users").document(Home.userInfo.getId());
+        userRef.update("links", FieldValue.arrayUnion(myLink))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: Added new link!");
+                        // TODO: Redirect user to profile
+                        AppCompatActivity activity = (AppCompatActivity) getActivity();
+                        Fragment myFragment = new ProfileFragment();
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, myFragment).addToBackStack(null).commit();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: Failed adding new link..." + e);
+                    }
+                });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-                Fragment ProfileFragment = new ProfileFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainer, ProfileFragment);
-                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                transaction.commit();
-
-    }
 }

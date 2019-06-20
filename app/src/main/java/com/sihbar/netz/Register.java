@@ -158,6 +158,7 @@ public class Register extends AppCompatActivity {
                     public void onFailure(@NonNull Exception error) {
                         Log.d(TAG, "addUser:failure", error);
                         progressDialog.cancel();
+                        Toast.makeText(Register.this, "" + error.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -196,9 +197,13 @@ public class Register extends AppCompatActivity {
                 saveQrCode(user.getUserId());
             } catch (Exception e) {
                 e.printStackTrace();
+                progressDialog.cancel();
+                Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         } catch (WriterException e) {
             Log.v(TAG, e.toString());
+            progressDialog.cancel();
+            Toast.makeText(Register.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -218,6 +223,7 @@ public class Register extends AppCompatActivity {
 
                 // Delete cache with qr code
                 qrcode.delete();
+                progressDialog.cancel();
 
                 // Redirect to login
                 startActivity(new Intent(Register.this, IntroAddInfo.class));
@@ -226,8 +232,9 @@ public class Register extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle unsuccessful uploads
-                // TODO: In case qr code generation fails, say the registration failed. De certa forma tamos em callback hell porcausa do try catch...
                 Log.d(TAG, "onFailure: Fuck. Rip QR code saving in storage.");
+                progressDialog.cancel();
+                Toast.makeText(Register.this, "Operation failed. Make sure you have internet enabled, and granted storage access.", Toast.LENGTH_SHORT).show();
             }
         });
     }

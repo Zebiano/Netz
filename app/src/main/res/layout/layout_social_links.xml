@@ -24,7 +24,7 @@
         android:text="Link"/>
 
     <ImageButton
-        android:id="@+id/imageButtonEdit"
+        android:id="@+id/btnEdit"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="center"

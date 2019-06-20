@@ -3,6 +3,8 @@ package com.sihbar.netz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -41,7 +43,12 @@ public class SaveNewLink extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: Added new link!");
-                        finish();
+                        // TODO: Redirect user to profile
+                        Fragment ProfileFragment = new ProfileFragment();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragmentContainer, ProfileFragment);
+                        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                        transaction.commit();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -50,6 +57,5 @@ public class SaveNewLink extends AppCompatActivity {
                         Log.d(TAG, "onFailure: Failed adding new link..." + e);
                     }
                 });
-
     }
 }
