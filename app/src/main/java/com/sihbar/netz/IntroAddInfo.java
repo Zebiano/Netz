@@ -2,6 +2,7 @@ package com.sihbar.netz;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,6 +61,7 @@ public class IntroAddInfo extends AppCompatActivity {
 
     // Buttonclick for adding a picture
     public void addPicture(View view) {
+        // Opens a menu for the user to choose a picture
         Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT, null);
         galleryintent.setType("image/*");
 
@@ -73,22 +74,16 @@ public class IntroAddInfo extends AppCompatActivity {
         Intent[] intentArray = {cameraIntent};
         chooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
         startActivityForResult(Intent.createChooser(chooser, "Select Picture"), PICK_IMAGE_REQUEST);
-
-        /*Intent intent = new Intent();
-        // Show only images, no videos or anything else
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        // Always show the chooser (if there are multiple options available)
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);*/
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // Sets the picture variable
         imageView = findViewById(R.id.imageView7);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Log.d(TAG, "onActivityResult: " + data.getData());
+            //Log.d(TAG, "onActivityResult: Picture taken! " + data.getData());
 
             Uri uri = data.getData();
             try {
@@ -99,12 +94,10 @@ public class IntroAddInfo extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getExtras().get("data") != null) {
-            Log.d(TAG, "onActivityResult: Oh ye!");
+            //Log.d(TAG, "onActivityResult: Picture chosen! " + data.getExtras().get("data"));
+
             picture = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(picture);
-        } else {
-            Toast.makeText(this, "Fuck you", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "onActivityResult: Fuck you");
         }
     }
 
@@ -185,6 +178,9 @@ public class IntroAddInfo extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d(TAG, "onSuccess: Added bio!");
+
+                                            // Redirects to home
+                                            launchHome(view);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -219,6 +215,9 @@ public class IntroAddInfo extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                             Log.d(TAG, "onSuccess: Save Picture to storage!");
+
+                            // Redirects to home
+                            launchHome(view);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -238,6 +237,35 @@ public class IntroAddInfo extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "onSuccess: Added bio!");
+
+                            // Saves Placeholder Profile Picture for the user
+                            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+                            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.getId());
+
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                            byte[] data = baos.toByteArray();
+
+                            UploadTask uploadTask = profilePicRef.putBytes(data);
+                            uploadTask
+                                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                                            Log.d(TAG, "onSuccess: Save Pic to storage!");
+                                            //Toast.makeText(IntroAddInfo.this, "Successfully saved plaveholder picture to storage!", Toast.LENGTH_SHORT).show();
+
+                                            // Redirects to home
+                                            launchHome(view);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception exception) {
+                                            // Handle unsuccessful uploads
+                                            Log.w(TAG, "onFailure: Rip saving placeholder picture to storage", exception);
+                                        }
+                                    });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -249,10 +277,35 @@ public class IntroAddInfo extends AppCompatActivity {
         } else {
             Log.d(TAG, "saveInfo: Nothing");
 
-            // Redirects to home
-            launchHome(view);
+            // Saves Placeholder Profile Picture for the user
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
+            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.getId());
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+            UploadTask uploadTask = profilePicRef.putBytes(data);
+            uploadTask
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                            Log.d(TAG, "onSuccess: Save Pic to storage!");
+                            //Toast.makeText(IntroAddInfo.this, "Successfully saved plaveholder picture to storage!", Toast.LENGTH_SHORT).show();
+
+                            // Redirects to home
+                            launchHome(view);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            Log.w(TAG, "onFailure: Rip saving placeholder picture to storage", exception);
+                        }
+                    });
         }
-        
     }
 
     // Launches Home

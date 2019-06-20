@@ -3,7 +3,6 @@ package com.sihbar.netz;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,7 +26,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.zxing.WriterException;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import androidmads.library.qrgenearator.QRGContents;
@@ -221,9 +219,6 @@ public class Register extends AppCompatActivity {
 
                 // Delete cache with qr code
                 qrcode.delete();
-
-                // Saves Profile Picture for the user (has to be in callback, else itll never save)
-                saveProfile(userId);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -233,41 +228,6 @@ public class Register extends AppCompatActivity {
                 Log.d(TAG, "onFailure: Fuck. Rip QR code saving in storage.");
             }
         });
-    }
-
-    // TODO: Only save this in case the user doesnt want to save a pciture... so this will probably go into the IntroAddInfo activity
-    // Saves the profile picture of the user
-    public void saveProfile(String userId) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
-        StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userId);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] data = baos.toByteArray();
-
-        UploadTask uploadTask = profilePicRef.putBytes(data);
-        uploadTask
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                        Log.d(TAG, "onSuccess: Save Pic to storage!");
-                        Toast.makeText(Register.this, "Successfully generated QR Code!", Toast.LENGTH_SHORT).show();
-
-                        progressDialog.cancel();
-
-                        // Redirect to login
-                        startActivity(new Intent(Register.this, IntroAddInfo.class));
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        Log.w(TAG, "onFailure: Rip saving picture to storage", exception);
-                    }
-                });
-
     }
 
     public void goBack(View view) {
