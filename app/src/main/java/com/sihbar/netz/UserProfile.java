@@ -1,5 +1,6 @@
 package com.sihbar.netz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +10,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -179,6 +184,22 @@ public class UserProfile extends AppCompatActivity {
     public void removeUser(View view) {
         Log.d(TAG, "removeUser: ");
 
+        FirebaseFirestore.getInstance().collection("users").document(Home.userInfo.getId()).update("contacts", FieldValue.arrayRemove(userId))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: Removed link successfully: " + userId);
+                        Toast.makeText(UserProfile.this, "User removed from contacts!", Toast.LENGTH_SHORT).show();
 
+                        // Redirect to Home
+                        startActivity(new Intent(UserProfile.this, Home.class));
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: Failed removing link: " + e);
+                    }
+                });
     }
 }

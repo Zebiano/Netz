@@ -142,8 +142,6 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
                         Log.d(TAG, "onFailure: Failed removing link: " + e);
                     }
                 });
-
-
     }
 
     // Shows Dialog

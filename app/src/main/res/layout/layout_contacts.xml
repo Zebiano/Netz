@@ -39,7 +39,7 @@
         app:srcCompat="@drawable/ic_baseline_star_border_24px" />
 
     <ImageButton
-        android:id="@+id/imageButtonDelete"
+        android:id="@+id/btnRemoveContact"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
@@ -47,7 +47,7 @@
         app:srcCompat="@drawable/ic__ionicons_svg_md_trash" />
 
     <ImageButton
-        android:id="@+id/imageButtonClick"
+        android:id="@+id/btnArrow"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_gravity="bottom"
