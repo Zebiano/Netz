@@ -1,5 +1,6 @@
 package com.sihbar.netz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,7 +33,6 @@ public class UserFound extends AppCompatActivity {
     private static final String TAG = "UserFound";
 
     // TODO: Add loading screenssssss
-    // TODO: Add links!
 
     TextView textViewName;
     TextView textViewWork;
@@ -40,7 +41,6 @@ public class UserFound extends AppCompatActivity {
     ImageView profilPic;
 
     String qrCodeInfo;
-    DocumentSnapshot userInfo;
     DocumentSnapshot foundUserInfo;
 
     // Arrays
@@ -115,23 +115,25 @@ public class UserFound extends AppCompatActivity {
     public void addUser(View view) {
         Log.d(TAG, "addUser: " + Home.userInfo.getId());
 
-        // TODO: Use Home.userifno and not set it to a new variable.
-        // Sets userInfo
-        userInfo = Home.userInfo;
-
         // Updates Document
-        DocumentReference userRef = firebaseFirestore.collection("users").document(userInfo.getId());
+        DocumentReference userRef = firebaseFirestore.collection("users").document(Home.userInfo.getId());
         userRef.update("contacts", FieldValue.arrayUnion(foundUserInfo.getId()))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: ");
+
+                        Toast.makeText(UserFound.this, "Successfully added user!", Toast.LENGTH_SHORT).show();
+
+                        // Redirect to Home
+                        startActivity(new Intent(UserFound.this, Home.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d(TAG, "onFailure: " + e);
+                        Toast.makeText(UserFound.this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -206,7 +208,6 @@ public class UserFound extends AppCompatActivity {
     public void loadImage(ImageView pic, String userId) {
 
         // Variables
-        userInfo = Home.userInfo;
         Log.d(TAG, "ID: " + userId);
 
         // Reference to an image file in Cloud Storage
