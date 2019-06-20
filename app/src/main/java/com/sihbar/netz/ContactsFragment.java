@@ -61,7 +61,7 @@ public class ContactsFragment extends Fragment {
         Log.d(TAG, "loadArrays: " + Home.userInfo.get("contacts"));
 
         arrayContacts = (List<String>) Home.userInfo.get("contacts");
-        if (arrayContacts != null) {
+        if (arrayContacts != null && arrayContacts.size() != 0) {
             for (int i = 0; i < arrayContacts.size(); i++) {
                 //Log.d(TAG, "loadArrays: " + arrayContacts.get(i));
 

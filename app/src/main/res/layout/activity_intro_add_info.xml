@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/_roboto_regular"
                 android:gravity="center_horizontal"
-                android:text="Oh wait!"
+                android:text="Hi there!"
                 android:textColor="#773CD6"
                 android:textSize="30dp" />
 

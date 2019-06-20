@@ -224,6 +224,7 @@ public class Register extends AppCompatActivity {
                 // Delete cache with qr code
                 qrcode.delete();
                 progressDialog.cancel();
+                Toast.makeText(Register.this, "Successfully generated QR Code!", Toast.LENGTH_SHORT).show();
 
                 // Redirect to login
                 startActivity(new Intent(Register.this, IntroAddInfo.class));
