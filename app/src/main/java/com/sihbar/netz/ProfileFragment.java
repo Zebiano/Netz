@@ -1,5 +1,6 @@
 package com.sihbar.netz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,6 +60,17 @@ public class ProfileFragment extends Fragment {
                 transaction.replace(R.id.fragmentContainer, AddNewFragment);
                 transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
                 transaction.commit();
+            }
+        });
+
+        ImageButton btnLogOut = view.findViewById(R.id.imageButtonLogout);
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: btnLogout");
+
+                // Logs the user out
+                logOut();
             }
         });
         return view;
@@ -174,5 +189,12 @@ public class ProfileFragment extends Fragment {
         GlideApp.with(ProfileFragment.this)
                 .load(profilePicRef)
                 .into(pic);
+    }
+
+    // Logs the user out
+    public void logOut() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(getActivity(), "Successfully logged out!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), MainActivity.class));
     }
 }

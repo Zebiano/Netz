@@ -1,5 +1,6 @@
 package com.sihbar.netz;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,6 +46,8 @@ public class IntroAddInfo extends AppCompatActivity {
     ImageView imageView;
     EditText editTextBio;
 
+    ProgressDialog progressDialog;
+
     // Firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -54,6 +57,8 @@ public class IntroAddInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro_add_info);
+
+        progressDialog = new ProgressDialog(this);
 
         // gets User data
         getUserData();
@@ -152,6 +157,9 @@ public class IntroAddInfo extends AppCompatActivity {
         final String bio = editTextBio.getText().toString();
         Log.d(TAG, "saveInfo: " + editTextBio.getText());
 
+        progressDialog.setMessage("Saving info...");
+        progressDialog.show();
+
         // Saves what is necessary to save
         if (picture != null && !editTextBio.getText().toString().trim().isEmpty()) {
             Log.d(TAG, "saveInfo: Picture + Bio");
@@ -187,6 +195,7 @@ public class IntroAddInfo extends AppCompatActivity {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             Log.d(TAG, "onFailure: Failed adding new link..." + e);
+                                            progressDialog.cancel();
                                         }
                                     });
                         }
@@ -196,6 +205,7 @@ public class IntroAddInfo extends AppCompatActivity {
                         public void onFailure(@NonNull Exception exception) {
                             // Handle unsuccessful uploads
                             Log.w(TAG, "onFailure: Rip saving picture to storage", exception);
+                            progressDialog.cancel();
                         }
                     });
         } else if (picture != null && editTextBio.getText().toString().trim().isEmpty()) {
@@ -225,6 +235,7 @@ public class IntroAddInfo extends AppCompatActivity {
                         public void onFailure(@NonNull Exception exception) {
                             // Handle unsuccessful uploads
                             Log.w(TAG, "onFailure: Rip saving picture to storage", exception);
+                            progressDialog.cancel();
                         }
                     });
         } else if (!editTextBio.getText().toString().trim().isEmpty()) {
@@ -264,6 +275,7 @@ public class IntroAddInfo extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception exception) {
                                             // Handle unsuccessful uploads
                                             Log.w(TAG, "onFailure: Rip saving placeholder picture to storage", exception);
+                                            progressDialog.cancel();
                                         }
                                     });
                         }
@@ -272,6 +284,7 @@ public class IntroAddInfo extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d(TAG, "onFailure: Failed adding new link..." + e);
+                            progressDialog.cancel();
                         }
                     });
         } else {
@@ -303,6 +316,7 @@ public class IntroAddInfo extends AppCompatActivity {
                         public void onFailure(@NonNull Exception exception) {
                             // Handle unsuccessful uploads
                             Log.w(TAG, "onFailure: Rip saving placeholder picture to storage", exception);
+                            progressDialog.cancel();
                         }
                     });
         }
@@ -310,6 +324,8 @@ public class IntroAddInfo extends AppCompatActivity {
 
     // Launches Home
     public void launchHome(View view) {
+        progressDialog.cancel();
+
         // Redirect to login
         startActivity(new Intent(this, Home.class));
     }

@@ -65,7 +65,8 @@
                 android:backgroundTint="@android:color/holo_purple"
                 android:ems="10"
                 android:gravity="left"
-                android:hint="Your handle" />
+                android:hint="Your handle"
+                android:inputType="textPersonName"/>
 
             <Button
                 android:id="@+id/btnConfirm"

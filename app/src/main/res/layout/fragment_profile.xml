@@ -15,10 +15,17 @@
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="10dp">
 
+        <ImageButton
+            android:id="@+id/imageButtonLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic__ionicons_svg_md_log_out"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -112,7 +119,9 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp" />
+            android:layout_marginHorizontal="30dp" >
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

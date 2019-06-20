@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Custom">
-        <activity android:name=".UserProfile"></activity>
+        <activity android:name=".UserProfile" />
         <activity android:name=".IntroAddInfo" />
         <activity android:name=".SaveNewLink" />
         <activity android:name=".UserFound" /> <!-- Change this line to another style under /res/values/styles.xml to change the style -->
@@ -31,7 +31,6 @@
             android:label="@string/title_activity_home" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />
-        <activity android:name=".Launch" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

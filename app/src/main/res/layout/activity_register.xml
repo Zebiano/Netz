@@ -129,7 +129,8 @@
                 android:backgroundTint="@android:color/holo_purple"
                 android:ems="10"
                 android:gravity="left"
-                android:hint="Country" />
+                android:hint="Country"
+                android:inputType="textPersonName"/>
 
             <EditText
                 android:id="@+id/editTextOccupation"
@@ -140,7 +141,8 @@
                 android:backgroundTint="@android:color/holo_purple"
                 android:ems="10"
                 android:gravity="left"
-                android:hint="What do you do/work?" />
+                android:hint="What do you do/work?"
+                android:inputType="textPersonName"/>
 
             <Button
                 android:id="@+id/buttonRegister"
