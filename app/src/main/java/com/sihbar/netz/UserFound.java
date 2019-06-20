@@ -215,6 +215,5 @@ public class UserFound extends AppCompatActivity {
         GlideApp.with(UserFound.this)
                 .load(profilePicRef)
                 .into(pic);
-
     }
 }

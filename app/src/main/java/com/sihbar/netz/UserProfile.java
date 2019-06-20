@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -158,7 +159,6 @@ public class UserProfile extends AppCompatActivity {
 
     // Adds image
     public void loadImage(ImageView pic, String userId) {
-
         // Variables
         Log.d(TAG, "ID: " + userId);
 
@@ -173,6 +173,12 @@ public class UserProfile extends AppCompatActivity {
         GlideApp.with(UserProfile.this)
                 .load(profilePicRef)
                 .into(pic);
+    }
+
+    // Removes a user from the contacts
+    public void removeUser(View view) {
+        Log.d(TAG, "removeUser: ");
+
 
     }
 }
