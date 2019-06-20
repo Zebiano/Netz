@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -20,10 +21,10 @@ public class RVAdapter_contacts extends RecyclerView.Adapter<RVAdapter_contacts.
     private static final String TAG = "RVAdapter_contacts";
 
     private Context context;
-    ArrayList<Integer> arrayImages;
+    ArrayList<StorageReference> arrayImages;
     private ArrayList<String> arrayNames;
 
-    public RVAdapter_contacts(Context context, ArrayList<Integer> arrayImages, ArrayList<String> arrayNames) {
+    public RVAdapter_contacts(Context context, ArrayList<StorageReference> arrayImages, ArrayList<String> arrayNames) {
         this.context = context;
         this.arrayImages = arrayImages;
         this.arrayNames = arrayNames;

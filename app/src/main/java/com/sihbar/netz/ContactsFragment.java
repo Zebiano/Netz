@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class ContactsFragment extends Fragment {
 
     // Arrays
     private ArrayList<String> arrayNames = new ArrayList<>();
-    ArrayList<Integer> arrayImages = new ArrayList<>();
+    ArrayList<StorageReference> arrayImages = new ArrayList<>();
     List<String> arrayContacts;
 
     // Firebase
@@ -85,8 +87,11 @@ public class ContactsFragment extends Fragment {
                                 //Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                                 //Log.d(TAG, "onComplete: " + document.get("contacts"));
                                 arrayNames.add(document.getString("name"));
-                                arrayImages.add(R.drawable.ic__ionicons_svg_md_warning);
-                                Log.d(TAG, "onComplete: " + arrayImages + ", " + arrayNames);
+
+                                // Add user images
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                                StorageReference profilePicRef = storageReference.child("profilepic/" + document.get("userId").toString());
+                                arrayImages.add(profilePicRef);
 
                                 // Checks if its the last loop
                                 if (i + 1 == arrayContacts.size()) {
@@ -106,7 +111,6 @@ public class ContactsFragment extends Fragment {
     // Initialize recyclerView
     private void initRecyclerView(View view) {
         Log.d(TAG, "initRecyclerView: ");
-
         Log.d(TAG, "initRecyclerView - Images: " + arrayImages + ", Names: " + arrayNames);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);

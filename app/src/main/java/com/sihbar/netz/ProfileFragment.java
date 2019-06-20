@@ -160,13 +160,12 @@ public class ProfileFragment extends Fragment {
     }
 
     public void loadImage(ImageView pic, String userID) {
-
         //Log.d(TAG, "ID: " + userID);
 
         // Reference to an image file in Cloud Storage
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profilePicRef = storageReference.child("profilepic/" + userID);
-        StorageReference imageRef = storageReference.child("profilepic/" + userID + ".jpeg");
+        //StorageReference imageRef = storageReference.child("profilepic/" + userID + ".jpeg");
 
         //Log.d(TAG, "setImage: " + imageRef);
 
@@ -175,6 +174,5 @@ public class ProfileFragment extends Fragment {
         GlideApp.with(ProfileFragment.this)
                 .load(profilePicRef)
                 .into(pic);
-
     }
 }

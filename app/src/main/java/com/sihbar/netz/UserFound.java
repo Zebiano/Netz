@@ -32,8 +32,6 @@ public class UserFound extends AppCompatActivity {
     // Variables
     private static final String TAG = "UserFound";
 
-    // TODO: Add loading screenssssss
-
     TextView textViewName;
     TextView textViewWork;
     TextView textViewCountry;
