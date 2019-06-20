@@ -2,6 +2,8 @@ package com.sihbar.netz;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -67,7 +69,7 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         // Set link text
         viewHolder.link.setText(arrayLinks.get(i));
 
-        // TODO: onClickListener para o editar e apagar. Minuto 15:45 de https://www.youtube.com/watch?v=Vyqz_-sJGFk
+        // Deletes link
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,11 +78,21 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
             }
         });
 
+        // Opens dialog to edit link
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: Clicked edit link!");
                 showDialog(arrayLinks.get(i));
+            }
+        });
+
+        // opens link on browser
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: Clicked link!");
+                openLink(arrayLinks.get(i));
             }
         });
     }
@@ -196,6 +208,13 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         builder.show();
     }
 
+    // Opens social link
+    public void openLink(final String link) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + link));
+        context.startActivity(browserIntent);
+    }
+
+    // Refreshes page
     public void refreshPage() {
         AppCompatActivity activity = (AppCompatActivity) context;
         Fragment myFragment = new ProfileFragment();

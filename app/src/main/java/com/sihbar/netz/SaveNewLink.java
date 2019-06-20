@@ -19,8 +19,6 @@ public class SaveNewLink extends AppCompatActivity {
     // Variables
     private static final String TAG = "SaveLink";
 
-    // TODO: Add a progressdialog
-
     // Firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -43,7 +41,8 @@ public class SaveNewLink extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: Added new link!");
-                        // TODO: Redirect user to profile
+
+                        // Redirect back to profile
                         Fragment ProfileFragment = new ProfileFragment();
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.fragmentContainer, ProfileFragment);

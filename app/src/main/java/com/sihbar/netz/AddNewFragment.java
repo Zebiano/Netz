@@ -114,7 +114,8 @@ public class AddNewFragment extends Fragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: Added new link!");
-                        // TODO: Redirect user to profile
+
+                        // Refresh fragment
                         AppCompatActivity activity = (AppCompatActivity) getActivity();
                         Fragment myFragment = new ProfileFragment();
                         activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, myFragment).addToBackStack(null).commit();
