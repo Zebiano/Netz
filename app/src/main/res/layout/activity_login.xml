@@ -79,9 +79,9 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/button_round"
-                android:gravity="center"
+                android:drawableTop="@drawable/ic__arrow_forward"
                 android:onClick="clickButtonLogin"
-                android:text="Login"
+                android:paddingTop="12sp"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
