@@ -115,7 +115,6 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: Removed link successfully: " + link);
                         Toast.makeText(context, "Link removed!", Toast.LENGTH_SHORT).show();
-                        // TODO: Atualizar a pagina/recyclerView quando se apaga um link. Mudar de actiovity resolve o prblema, mas e chato, Devia atualziar sozinho.
 
                         AppCompatActivity activity = (AppCompatActivity) context;
                         Fragment myFragment = new ProfileFragment();
