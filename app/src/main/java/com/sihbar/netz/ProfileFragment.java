@@ -93,6 +93,7 @@ public class ProfileFragment extends Fragment {
         // Loads arrays with user content
         laodArrays(view);
 
+        // TODO: Nao é este ID, mas sim o Home.userInfo.getId() (que e diferente!). Depois temos que mudar tmb no registo.
         loadImage(profilPic, userInfo.getString("userId") );
 
     }

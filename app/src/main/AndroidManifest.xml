@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Custom">
-        <activity android:name=".SaveNewLink"></activity>
+        <activity android:name=".IntroAddInfo" />
+        <activity android:name=".SaveNewLink" />
         <activity android:name=".UserFound" /> <!-- Change this line to another style under /res/values/styles.xml to change the style -->
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
