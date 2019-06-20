@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import static android.app.Activity.RESULT_OK;
+import static android.support.constraint.Constraints.TAG;
+
 public class AddNewFragment extends Fragment {
 
     EditText txtHandle;
     String link;
     String handle;
+
+    static final int PICK_CONTACT_REQUEST = 1;
 
     // FIXME: Quando se abre "your handle" para escrever, o teclado vaio pra cima e leva tmb a barra do menu de baixo xD
 
@@ -99,8 +105,17 @@ public class AddNewFragment extends Fragment {
         Intent intent = new Intent(getActivity(), SaveNewLink.class);
         intent.putExtra("app", link);
         intent.putExtra("handle", handle);
-        startActivity(intent);
+        startActivityForResult(intent,111);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+                Fragment ProfileFragment = new ProfileFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, ProfileFragment);
+                transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+                transaction.commit();
+
+    }
 }

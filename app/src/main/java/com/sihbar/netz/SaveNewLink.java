@@ -41,7 +41,7 @@ public class SaveNewLink extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: Added new link!");
-                        // TODO: Redirect user to profile
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -51,6 +51,5 @@ public class SaveNewLink extends AppCompatActivity {
                     }
                 });
 
-        finish();
     }
 }
