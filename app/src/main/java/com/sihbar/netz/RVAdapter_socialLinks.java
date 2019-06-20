@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,6 +35,9 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     private Context context;
     ArrayList<Integer> arrayLogos;
     private ArrayList<String> arrayLinks;
+
+    // Firebase
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
 
     public RVAdapter_socialLinks(Context context, ArrayList<Integer> arrayLogos, ArrayList<String> arrayLinks) {
         this.context = context;
@@ -76,7 +80,7 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: Clicked edit link!");
-                showDialog();
+                showDialog(arrayLinks.get(i));
             }
         });
     }
@@ -116,9 +120,8 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
                         Log.d(TAG, "onSuccess: Removed link successfully: " + link);
                         Toast.makeText(context, "Link removed!", Toast.LENGTH_SHORT).show();
 
-                        AppCompatActivity activity = (AppCompatActivity) context;
-                        Fragment myFragment = new ProfileFragment();
-                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, myFragment).addToBackStack(null).commit();
+                        // Refresh page
+                        refreshPage();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -132,21 +135,55 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     }
 
     // Shows Dialog
-    public void showDialog() {
+    public void showDialog(final String link) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Title");
+        builder.setTitle("Write the full link please:");
 
         // Set up the input
         final EditText input = new EditText(context);
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
         // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Edit Link", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //m_Text = input.getText().toString();
+                // First remove link, and then add it
+                // Updates Document
+                DocumentReference userRef = firebaseFirestore.collection("users").document(Home.userInfo.getId());
+                userRef.update("links", FieldValue.arrayRemove(link))
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "onSuccess: Deleted link!");
+
+                                // Updates Document
+                                DocumentReference userRef = firebaseFirestore.collection("users").document(Home.userInfo.getId());
+                                userRef.update("links", FieldValue.arrayUnion(input.getText().toString()))
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "onSuccess: Added link!");
+
+                                                // Refresh page
+                                                refreshPage();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "onFailure: " + e);
+                                            }
+                                        });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "onFailure: " + e);
+                            }
+                        });
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -157,5 +194,11 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         });
 
         builder.show();
+    }
+
+    public void refreshPage() {
+        AppCompatActivity activity = (AppCompatActivity) context;
+        Fragment myFragment = new ProfileFragment();
+        activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, myFragment).addToBackStack(null).commit();
     }
 }
