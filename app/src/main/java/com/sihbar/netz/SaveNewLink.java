@@ -9,7 +9,6 @@ import android.util.Log;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -19,9 +18,6 @@ public class SaveNewLink extends AppCompatActivity {
     private static final String TAG = "SaveLink";
 
     // TODO: Add a progressdialog
-
-    DocumentSnapshot userInfo;
-    DocumentSnapshot foundUserInfo;
 
     // Firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -38,12 +34,8 @@ public class SaveNewLink extends AppCompatActivity {
 
         String myLink = app + ".com/" + handle;
 
-
-        // Sets userInfo
-        userInfo = Home.userInfo;
-
         // Updates Document
-        DocumentReference userRef = firebaseFirestore.collection("users").document(userInfo.getId());
+        DocumentReference userRef = firebaseFirestore.collection("users").document(Home.userInfo.getId());
         userRef.update("links", FieldValue.arrayUnion(myLink))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

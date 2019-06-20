@@ -7,13 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,10 +29,6 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     ArrayList<Integer> arrayLogos;
     private ArrayList<String> arrayLinks;
 
-    DocumentSnapshot userInfo;
-
-    Button btnDelete;
-
     public RVAdapter_socialLinks(Context context, ArrayList<Integer> arrayLogos, ArrayList<String> arrayLinks) {
         this.context = context;
         this.arrayLogos = arrayLogos;
@@ -41,27 +39,15 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_social_links, viewGroup, false);
-            ViewHolder holder = new ViewHolder(view);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_social_links, viewGroup, false);
+        ViewHolder holder = new ViewHolder(view);
 
-            btnDelete = viewGroup.findViewById(R.id.btnDelete);
-
-        btnDelete = viewGroup.findViewById(R.id.btnDelete);
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               deleteLink();
-            }
-        });
-
-            return holder;
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         //Log.d(TAG, "onBindViewHolder: " + arrayLinks.get(i));
-        //Log.d(TAG, "onBindViewHolder: " + arrayLogos.get(i));
 
         // Set image logos
         Glide.with(context)
@@ -72,7 +58,13 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         viewHolder.link.setText(arrayLinks.get(i));
 
         // TODO: onClickListener para o editar e apagar. Minuto 15:45 de https://www.youtube.com/watch?v=Vyqz_-sJGFk
-        // TODO: Falta meter os icons dentro do layout_social_links.xml
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: Clicked!");
+                deleteLink(arrayLinks.get(i));
+            } 
+        });
     }
 
     @Override
@@ -86,23 +78,35 @@ public class RVAdapter_socialLinks extends RecyclerView.Adapter<RVAdapter_social
         ImageView logo;
         TextView link;
         LinearLayout parentLayout;
+        ImageButton btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             logo = itemView.findViewById(R.id.imageViewLogo);
             link = itemView.findViewById(R.id.textViewLink);
             parentLayout = itemView.findViewById(R.id.ParentLayout);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 
-    public void deleteLink(){
-        Log.d(TAG, "Entrei no delete " );
+    // Deletes link
+    public void deleteLink(final String link) {
+        Log.d(TAG, "deleteLink: ");
 
-        // TODO: Depois de saber quem ta logado acho que ta pronto
-       // userInfo = Home.userInfo;
-
-        //Log.d(TAG, "deleteLink: " + userInfo.getId());
-     //   FirebaseFirestore.getInstance().collection("users").document(userInfo.getId()).update("links", FieldValue.arrayRemove("facebook.com/"));
-
+        FirebaseFirestore.getInstance().collection("users").document(Home.userInfo.getId()).update("links", FieldValue.arrayRemove(link))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: Removed link successfully: " + link);
+                        Toast.makeText(context, "Link removed!", Toast.LENGTH_SHORT).show();
+                        // TODO: Atualizar a pagina/recyclerView quando se apaga um link. Mudar de actiovity resolve o prblema, mas e chato, Devia atualziar sozinho.
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: Failed removing link: " + e);
+                    }
+                });
     }
 }
