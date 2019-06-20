@@ -2,8 +2,6 @@ package com.sihbar.netz;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.camerakit.CameraKitView;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,6 +60,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: btnTakePicture");
+                progressDialog.setMessage("Analysing picture...");
+                progressDialog.show();
 
                 cameraKitView.captureImage(new CameraKitView.ImageCallback() {
                     @Override
@@ -165,22 +166,29 @@ public class HomeFragment extends Fragment {
                         // Task completed successfully
                         Log.d(TAG, "onSuccess: " + barcodes);
 
-                        for (FirebaseVisionBarcode barcode : barcodes) {
-                            Rect bounds = barcode.getBoundingBox();
-                            Point[] corners = barcode.getCornerPoints();
+                        if (barcodes.size() > 0) {
+                            for (FirebaseVisionBarcode barcode : barcodes) {
+                                //Rect bounds = barcode.getBoundingBox();
+                                //Point[] corners = barcode.getCornerPoints();
 
-                            String rawValue = barcode.getRawValue();
+                                String rawValue = barcode.getRawValue();
+                                int valueType = barcode.getValueType();
 
-                            int valueType = barcode.getValueType();
-                            // See API reference for complete list of supported types
-                            Log.d(TAG, "onSuccess: " + valueType);
-                            Log.d(TAG, "onSuccess: " + rawValue);
+                                // See API reference for complete list of supported types
+                                Log.d(TAG, "onSuccess: " + valueType);
+                                Log.d(TAG, "onSuccess: " + rawValue);
 
-                            // Sets value
-                            qrCodeInfo = rawValue;
+                                // Sets value
+                                qrCodeInfo = rawValue;
 
-                            // Launches new activity
-                            startActivity(new Intent(getActivity(), UserFound.class));
+                                progressDialog.cancel();
+
+                                // Launches new activity
+                                startActivity(new Intent(getActivity(), UserFound.class));
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), "Unable to identify QR Code! Try zooming in/out a bit", Toast.LENGTH_SHORT).show();
+                            progressDialog.cancel();
                         }
                     }
                 })

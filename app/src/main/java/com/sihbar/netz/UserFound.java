@@ -3,6 +3,8 @@ package com.sihbar.netz;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,12 +23,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
 public class UserFound extends AppCompatActivity {
 
     // Variables
     private static final String TAG = "UserFound";
 
     // TODO: Add loading screenssssss
+    // TODO: Add links!
 
     TextView textViewName;
     TextView textViewWork;
@@ -37,6 +42,10 @@ public class UserFound extends AppCompatActivity {
     String qrCodeInfo;
     DocumentSnapshot userInfo;
     DocumentSnapshot foundUserInfo;
+
+    // Arrays
+    private ArrayList<String> arrayLinks = new ArrayList<>();
+    ArrayList<Integer> arrayLogos = new ArrayList<>();
 
     // Firebase
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -87,7 +96,8 @@ public class UserFound extends AppCompatActivity {
                         textViewCountry.setText(foundUserInfo.getString("country"));
                         textViewBio.setText(foundUserInfo.getString("bio"));
 
-                        loadImage(profilPic, foundUserInfo.getString("userId"));
+                        // Loads arrays with user content
+                        loadArrays();
 
                         // TODO: Add links to foudn user
 
@@ -99,9 +109,6 @@ public class UserFound extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 
     // Adds found user to contacts
@@ -129,12 +136,77 @@ public class UserFound extends AppCompatActivity {
                 });
     }
 
+    // Loads Arrays with data
+    private void loadArrays() {
+
+        // Checks for the links array in userDocument
+        if (foundUserInfo.get("links") != null) {
+            // Sets Links array
+            arrayLinks = (ArrayList<String>) foundUserInfo.get("links");
+            Log.d(TAG, "loadArrays: " + foundUserInfo);
+
+            // Sets logos arrays
+            for (int i = 0; i < arrayLinks.size(); i++) {
+                Log.d(TAG, "laodArrays: " + arrayLinks.get(i));
+                if (arrayLinks.get(i).contains("facebook")) {
+                    Log.d(TAG, "laodArrays: Facebook!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_facebook);
+                } else if (arrayLinks.get(i).contains("github")) {
+                    Log.d(TAG, "laodArrays: Github!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_github);
+                } else if (arrayLinks.get(i).contains("instagram")) {
+                    Log.d(TAG, "laodArrays: Instagram!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_instagram);
+                } else if (arrayLinks.get(i).contains("linkedin")) {
+                    Log.d(TAG, "laodArrays: LinkedIn!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_linkedin);
+                } else if (arrayLinks.get(i).contains("pinterest")) {
+                    Log.d(TAG, "laodArrays: Pinterest!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_pinterest);
+                } else if (arrayLinks.get(i).contains("slack")) {
+                    Log.d(TAG, "laodArrays: Slack!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_slack);
+                } else if (arrayLinks.get(i).contains("snapchat")) {
+                    Log.d(TAG, "laodArrays: Snapchat!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_snapchat);
+                } else if (arrayLinks.get(i).contains("twitter")) {
+                    Log.d(TAG, "laodArrays: Twitter!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_twitter);
+                } else if (arrayLinks.get(i).contains("youtube")) {
+                    Log.d(TAG, "laodArrays: Youtube!");
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_logo_youtube);
+                } else {
+                    Log.d(TAG, "laodArrays: Not recognized: " + arrayLinks.get(i));
+                    arrayLogos.add(R.drawable.ic__ionicons_svg_md_warning);
+                }
+            }
+
+            // Initialises the recycler view
+            initRecyclerView();
+        } else {
+            Log.d(TAG, "laodArrays: Null arrayLinks");
+            // TODO: Este else acontece se nao haver links!
+        }
+    }
+
+    // Initialize recyclerView
+    private void initRecyclerView () {
+        Log.d(TAG, "initRecyclerView: ");
+
+        RecyclerView recyclerView = this.findViewById(R.id.recyclerView);
+        RVAdapter_socialLinks_userFound adapter = new RVAdapter_socialLinks_userFound(this, arrayLogos, arrayLinks);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Loads Image
+        loadImage(profilPic, foundUserInfo.getString("userId"));
+    }
+
+    // Adds image
     public void loadImage(ImageView pic, String userId) {
 
         // Variables
-
         userInfo = Home.userInfo;
-        //String userID = userInfo.getString("userId");
         Log.d(TAG, "ID: " + userId);
 
         // Reference to an image file in Cloud Storage
@@ -142,7 +214,6 @@ public class UserFound extends AppCompatActivity {
         StorageReference profilePicRef = storageReference.child("profilepic/" + userId);
 
         Log.d(TAG, "setImage: " + profilePicRef);
-
 
         // Download directly from StorageReference using Glide
         // (See MyAppGlideModule for Loader registration)
