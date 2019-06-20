@@ -60,7 +60,7 @@ public class Register extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
 
-        // ProgressBar
+        // ProgressDialog
         progressDialog = new ProgressDialog(this);
 
         // EditTexts
@@ -131,7 +131,6 @@ public class Register extends AppCompatActivity {
     public void saveUserToFirebase(final String name, final String phone, final String password, final String email, final String country, final String occupation) {
         final String userId = firebaseAuth.getUid();
 
-        // TODO: Add links to user
         // Create new User with our own class
         final User user = new User(
                 userId,
@@ -219,6 +218,9 @@ public class Register extends AppCompatActivity {
 
                 // Delete cache with qr code
                 qrcode.delete();
+
+                // Redirect to login
+                startActivity(new Intent(Register.this, IntroAddInfo.class));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -230,6 +232,7 @@ public class Register extends AppCompatActivity {
         });
     }
 
+    // Goes back
     public void goBack(View view) {
         startActivity(new Intent(this, MainActivity.class));
     }

@@ -1,5 +1,6 @@
 package com.sihbar.netz;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,9 +22,7 @@ public class DisplayQR extends Fragment {
 
     private static final String TAG = "DisplayQR";
     ImageView qrcode;
-
-    // TODO: Make button useful for smtgh
-    // TODO: Create a loading for the QR code until it appears
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -32,10 +31,9 @@ public class DisplayQR extends Fragment {
         // Inflater/View
         View view = inflater.inflate(R.layout.fragment_displayqr, null);
 
+        // Variables
         Button btnBack = view.findViewById(R.id.btnBack);
-
         qrcode = view.findViewById(R.id.imgQRcode);
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
@@ -67,14 +65,18 @@ public class DisplayQR extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // ProgressDialog
+        progressDialog = new ProgressDialog(getActivity());
     }
 
+    // Shows QR Code
     public void showQR(ImageView qrcode, String userID) {
+        progressDialog.setMessage("Loading QR Code...");
+        progressDialog.show();
 
         // Reference to an image file in Cloud Storage
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference qrCodesRef = storageReference.child("qrcodes/" + userID);
-
         StorageReference qrReferece = storageReference.child("qrcodes/" + userID + ".jpeg");
 
         Log.d(TAG, "showQR: " + qrReferece);
@@ -86,5 +88,6 @@ public class DisplayQR extends Fragment {
                 .load(qrCodesRef)
                 .into(qrcode);
 
+        progressDialog.cancel();
     }
 }

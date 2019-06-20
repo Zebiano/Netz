@@ -1,5 +1,6 @@
 package com.sihbar.netz;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment {
     private CameraKitView cameraKitView;
 
     public static String qrCodeInfo;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -50,6 +52,9 @@ public class HomeFragment extends Fragment {
         // Buttons
         Button btnTakePicture = view.findViewById(R.id.btnTakePicture);
         Button btnChangeMode = view.findViewById(R.id.btnDisplayQR);
+
+        // ProgressDialog
+        progressDialog = new ProgressDialog(getActivity());
 
         // OnClick Button Take Picture
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
@@ -69,14 +74,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // OnClick Button Change Mode
+        // OnClick Button open QR code
         btnChangeMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: btnChangeMode");
 
-                // TODO: Create a loading showing the user pressed the button
-                // TODO: Open an activity that shows the profile o another user! Not a fragment... Makes things easier.
                 // Launch profile fragment
                 Fragment displayQR= new DisplayQR();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -175,14 +178,6 @@ public class HomeFragment extends Fragment {
 
                             // Sets value
                             qrCodeInfo = rawValue;
-
-                            // TODO: Open an activity that shows the profile o another user! Not a fragment... Makes things easier.
-                            // Launch profile fragment
-                            /*Fragment profileFragment= new ProfileFragment();
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragment_container, profileFragment);
-                            transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
-                            transaction.commit();*/
 
                             // Launches new activity
                             startActivity(new Intent(getActivity(), UserFound.class));

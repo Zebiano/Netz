@@ -21,7 +21,7 @@ public class AddNewFragment extends Fragment {
     String link;
     String handle;
 
-    // TODO: Quando se abre "your handle" para escrever, o teclado vaio pra cima e leva tmb a barra do menu de baixo xD
+    // FIXME: Quando se abre "your handle" para escrever, o teclado vaio pra cima e leva tmb a barra do menu de baixo xD
 
     @Nullable
     @Override

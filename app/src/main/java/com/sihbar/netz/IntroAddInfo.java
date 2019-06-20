@@ -157,7 +157,7 @@ public class IntroAddInfo extends AppCompatActivity {
             Log.d(TAG, "saveInfo: Picture + Bio");
 
             // Variables
-            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.getId());
+            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.get("userId"));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] data = baos.toByteArray();
@@ -202,7 +202,7 @@ public class IntroAddInfo extends AppCompatActivity {
             Log.d(TAG, "saveInfo: Picture only");
 
             // Variables
-            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.getId());
+            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.get("userId"));
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] data = baos.toByteArray();
@@ -240,7 +240,7 @@ public class IntroAddInfo extends AppCompatActivity {
 
                             // Saves Placeholder Profile Picture for the user
                             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
-                            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.getId());
+                            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.get("userId"));
 
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -279,7 +279,7 @@ public class IntroAddInfo extends AppCompatActivity {
 
             // Saves Placeholder Profile Picture for the user
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.placeholder);
-            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.getId());
+            StorageReference profilePicRef = firebaseStorage.getReference().child("profilepic/" + userInfo.get("userId"));
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);

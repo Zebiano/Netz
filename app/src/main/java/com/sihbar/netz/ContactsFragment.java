@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,7 +25,6 @@ public class ContactsFragment extends Fragment {
 
     // Variables
     private static final String TAG = "ContactsFragment";
-    DocumentSnapshot userInfo;
 
     // Arrays
     private ArrayList<String> arrayNames = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ContactsFragment extends Fragment {
                 getContacts(arrayContacts.get(i), i, view);
             }
         } else {
-            // TODO: Caso o utilizador nao tenha contactos
+            Toast.makeText(getActivity(), "You have no Contacts! Consider adding someone :)", Toast.LENGTH_SHORT).show();
         }
     }
 

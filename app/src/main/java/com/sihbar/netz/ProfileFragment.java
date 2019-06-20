@@ -93,9 +93,8 @@ public class ProfileFragment extends Fragment {
         // Loads arrays with user content
         laodArrays(view);
 
-        // TODO: Nao é este ID, mas sim o Home.userInfo.getId() (que e diferente!). Depois temos que mudar tmb no registo.
+        // Loads profile picture
         loadImage(profilPic, userInfo.getString("userId") );
-
     }
 
     // Loads Arrays with data
@@ -146,7 +145,7 @@ public class ProfileFragment extends Fragment {
             initRecyclerView(view);
         } else {
             Log.d(TAG, "laodArrays: Null arrayLinks");
-            // TODO: HUGO - Este else acontece se nao haver links! Temos que por o botao no meio depois ou algo do genero
+            // TODO: Este else acontece se nao haver links!
         }
     }
 
@@ -162,16 +161,14 @@ public class ProfileFragment extends Fragment {
 
     public void loadImage(ImageView pic, String userID) {
 
-        Log.d(TAG, "ID: " + userID);
+        //Log.d(TAG, "ID: " + userID);
 
         // Reference to an image file in Cloud Storage
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profilePicRef = storageReference.child("profilepic/" + userID);
-
         StorageReference imageRef = storageReference.child("profilepic/" + userID + ".jpeg");
 
-        Log.d(TAG, "setImage: " + imageRef);
-
+        //Log.d(TAG, "setImage: " + imageRef);
 
         // Download directly from StorageReference using Glide
         // (See MyAppGlideModule for Loader registration)
